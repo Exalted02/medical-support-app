@@ -7,8 +7,8 @@ abstract class Routes {
   Routes._();
 	static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;	
 	static const ONBOARDING1 = _Paths.ONBOARDING1;
-	static const CONSUMER_REGISTER = _Paths.CONSUMER_REGISTER;
-	static const RETAILER_REGISTER = _Paths.RETAILER_REGISTER;
+	static const CLIENT_REGISTER = _Paths.CLIENT_REGISTER;
+	static const EMPLOYEE_REGISTER = _Paths.EMPLOYEE_REGISTER;
     static const LOGIN_SCREEN = _Paths.LOGIN_SCREEN;
 	static const FORGOT_SCREEN = _Paths.FORGOT_SCREEN;
 	static const OTP_VERIFICATION_SCREEN = _Paths.OTP_VERIFICATION_SCREEN;
@@ -38,8 +38,8 @@ abstract class _Paths {
 	_Paths._();
 	static const SPLASH_SCREEN = '/splash-screen';
 	static const ONBOARDING1 = '/onboarding1';
-	static const CONSUMER_REGISTER = '/consumer-register';
-	static const RETAILER_REGISTER = '/retailer-register';
+	static const CLIENT_REGISTER = '/client-register';
+	static const EMPLOYEE_REGISTER = '/employee-register';
 	static const LOGIN_SCREEN = '/login-screen';
 	static const FORGOT_SCREEN = '/forgot-screen';
 	static const OTP_VERIFICATION_SCREEN = '/otp-verification-screen';

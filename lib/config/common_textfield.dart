@@ -4,6 +4,7 @@ import 'package:medicalsupport/config/app_color.dart';
 //used
 Widget autoWidthTextField({
   required String text,
+  String? text1,
   required double width,
   IconData? icon,
   IconData? subicon,
@@ -37,12 +38,12 @@ Widget autoWidthTextField({
       obscureText: obscureText,
       style: const TextStyle(color: AppColor.formTextColor),
       decoration: InputDecoration(
-		/*labelText: text,
+		labelText: text1,
 		labelStyle: TextStyle(
           color: AppColor.formTextColor,  // Use the passed color or default to grey
 		  fontSize: 14,
 		  fontFamily: 'Urbanist-regular'
-        ),*/
+        ),
         hintText: text,
 		hintStyle: TextStyle(
 			color: AppColor.formTextColor, 

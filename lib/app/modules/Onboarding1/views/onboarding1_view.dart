@@ -49,7 +49,7 @@ class Onboarding1View extends GetView<Onboarding1Controller> {
             child: elevated(
               text: Appcontent.signUpClient,
               onPress: () {
-                Get.toNamed(Routes.CONSUMER_REGISTER);
+                Get.toNamed(Routes.CLIENT_REGISTER);
               },
             ),
           ),
@@ -58,7 +58,7 @@ class Onboarding1View extends GetView<Onboarding1Controller> {
             child: whiteBgBlackBorderBtn(
               text: Appcontent.signUpEmployee,
               onPress: () {
-                Get.toNamed(Routes.RETAILER_REGISTER);
+                Get.toNamed(Routes.EMPLOYEE_REGISTER);
               },
             ),
           ),

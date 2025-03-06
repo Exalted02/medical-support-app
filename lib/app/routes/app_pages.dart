@@ -7,10 +7,10 @@ import '../modules/Onboarding1/bindings/onboarding1_binding.dart';
 import '../modules/Onboarding1/views/onboarding1_view.dart';
 import '../modules/login_screen/bindings/login_screen_binding.dart';
 import '../modules/login_screen/views/login_screen_view.dart';
-import '../modules/register/bindings/consumer_register_binding.dart';
-import '../modules/register/views/consumer_register_view.dart';
-import '../modules/register/bindings/retailer_register_binding.dart';
-import '../modules/register/views/retailer_register_view.dart';
+import '../modules/register/bindings/client_register_binding.dart';
+import '../modules/register/views/client_register_view.dart';
+import '../modules/register/bindings/employee_register_binding.dart';
+import '../modules/register/views/employee_register_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import 'package:medicalsupport/app/modules/product/bindings/product_binding.dart';
@@ -67,14 +67,14 @@ class AppPages {
       binding: Onboarding1Binding(),
     ),
     GetPage(
-      name: _Paths.CONSUMER_REGISTER,
-      page: () =>  ConsumerRegisterView(),
-      binding: ConsumerRegisterBinding(),
+      name: _Paths.CLIENT_REGISTER,
+      page: () =>  ClientRegisterView(),
+      binding: ClientRegisterBinding(),
     ),
 	GetPage(
-      name: _Paths.RETAILER_REGISTER,
-      page: () =>  RetailerRegisterView(),
-      binding: RetailerRegisterBinding(),
+      name: _Paths.EMPLOYEE_REGISTER,
+      page: () =>  EmployeeRegisterView(),
+      binding: EmployeeRegisterBinding(),
     ),
     GetPage(
       name: _Paths.LOGIN_SCREEN,

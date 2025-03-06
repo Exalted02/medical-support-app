@@ -10,6 +10,8 @@ class AppColor{
 	static const Color formLabelColor = Color(0xff646464);
 	
 	static const Color purpleProper = Color(0xff6B4EFF);
+	
+	static const Color clientTheme = Color(0xFF5F786D);
   
   
   // ignore: constant_identifier_names

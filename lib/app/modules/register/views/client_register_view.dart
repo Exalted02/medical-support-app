@@ -14,8 +14,8 @@ import '../controllers/register_controller.dart';
 import 'package:medicalsupport/app/modules/login_screen/controllers/login_screen_controller.dart';
 
 // ignore: must_be_immutable
-class ConsumerRegisterView extends GetView<RegisterController> {
-  ConsumerRegisterView({super.key});
+class ClientRegisterView extends GetView<RegisterController> {
+  ClientRegisterView({super.key});
 
   //final LoginScreenController loginScreenController = Get.find();
   final ApiService apiService = Get.put(ApiService());
@@ -84,9 +84,10 @@ class ConsumerRegisterView extends GetView<RegisterController> {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
 	// Fetch the country list when the view loads
-    registerController.fetchCountryList();
+    //registerController.fetchCountryList();
 	
     return Scaffold(
+	  backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
           child: Column(
@@ -108,7 +109,7 @@ class ConsumerRegisterView extends GetView<RegisterController> {
 						  ),
 						  const Padding(
 							padding: EdgeInsets.only(left: 10, top: 1),
-							child: Text(Appcontent.signUpConsumerHeading,
+							child: Text(Appcontent.signUpClient,
 							  style: TextStyle(
 								fontSize: 32,
 								fontWeight: FontWeight.bold,
@@ -118,37 +119,15 @@ class ConsumerRegisterView extends GetView<RegisterController> {
 							  overflow: TextOverflow.ellipsis,
 							),
 						  ),
-						  Padding(
-							padding: const EdgeInsets.only(left: 10, top: 10),
-							child: Text(
-							  'Please input your form register.',
-							  style: TextStyle(
-								fontSize: 14,
-								color: Colors.grey.shade500,
-								fontWeight: FontWeight.w500,
-								fontFamily: 'Urbanist-medium'
-							  ),
-							  overflow: TextOverflow.ellipsis,
-							),
-						  ),
 							Padding(
 								padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
 								child: Column(
 								crossAxisAlignment: CrossAxisAlignment.start,
-									children: [
-									  // Label Above the TextField
-									  Text(
-										Appcontent.firstName,
-										style: TextStyle(
-										  fontSize: 16,
-										  color: AppColor.formLabelColor, // Or any color you prefer
-										),
-									  ),
-									  const SizedBox(height: 8), // Space between label and text field
-
+									children: [	
 									  // Text Field
 									  autoWidthTextField(
 										text: Appcontent.placeholderFirstName,
+										text1: 'First Name',
 										width: screenWidth,
 										controller: firstnameController,
 										focusNode: _firstnameFocusNode,
@@ -159,11 +138,12 @@ class ConsumerRegisterView extends GetView<RegisterController> {
 										  return null;
 										},
 										onChanged: (value) {
-										  if (value.isNotEmpty) {
+										  /*if (value.isNotEmpty) {
 											_formKey.currentState?.validate();
-										  }
+										  }*/
 										},
 									  ),
+									  /*
 									  // Label Above the TextField
 									  Text(
 										Appcontent.lastName,
@@ -173,10 +153,11 @@ class ConsumerRegisterView extends GetView<RegisterController> {
 										),
 									  ),
 									  const SizedBox(height: 8), // Space between label and text field
-
+									  */
 									  // Text Field
 									  autoWidthTextField(
 										text: Appcontent.placeholderLastName,
+										text1: 'Last Name',
 										width: screenWidth,
 										controller: lastnameController,
 										focusNode: _lastnameFocusNode,
@@ -192,6 +173,7 @@ class ConsumerRegisterView extends GetView<RegisterController> {
 										  }
 										},
 									  ),
+									/*  
 									// Label Above the TextField
 									Text(
 										Appcontent.email,
@@ -201,9 +183,10 @@ class ConsumerRegisterView extends GetView<RegisterController> {
 										),
 									),
 									const SizedBox(height: 8), // Space between label and text field
-							
+									*/
 									autoWidthTextField(
 									  text: Appcontent.placeholderEmail,
+									  text1: 'Email Address',
 									  width: screenWidth,
 									  controller: emailController,
 									  focusNode: _emailFocusNode,
@@ -223,18 +206,86 @@ class ConsumerRegisterView extends GetView<RegisterController> {
 										}
 									  },
 									),
-									// Label Above the TextField
-									Text(
-										Appcontent.passwordLbl,
-										style: TextStyle(
-											fontSize: 16,
-											color: AppColor.formLabelColor, // Or any color you prefer
-										),
+									// Text Field
+									autoWidthTextField(
+										text: 'Enter Contact Number',
+										text1: 'Contact Number',
+										width: screenWidth,
+										controller: phoneController,
+										focusNode: _phoneFocusNode,
+										validator: (value) {
+										  if (value == null || value.isEmpty) {
+											return 'Phone number cannot be blank';
+										  }
+										  return null;
+										},
+										onChanged: (value) {
+										  if (value.isNotEmpty) {
+											_formKey.currentState?.validate();
+										  }
+										},
 									),
-									const SizedBox(height: 8), // Space between label and text field
+									// Text Field
+									autoWidthTextField(
+										text: 'Enter Fax Number',
+										text1: 'Fax Number',
+										width: screenWidth,
+										controller: phoneController,
+										focusNode: _phoneFocusNode,
+										validator: (value) {
+										  if (value == null || value.isEmpty) {
+											return 'Phone number cannot be blank';
+										  }
+										  return null;
+										},
+										onChanged: (value) {
+										  if (value.isNotEmpty) {
+											_formKey.currentState?.validate();
+										  }
+										},
+									),
+									// Text Field
+									autoWidthTextField(
+										text: Appcontent.placeholdercompanyName,
+										text1: 'Company Name',
+										width: screenWidth,
+										controller: companynameController,
+										focusNode: _companynameFocusNode,
+										validator: (value) {
+										  if (value == null || value.isEmpty) {
+											return 'Company name cannot be blank';
+										  }
+										  return null;
+										},
+										onChanged: (value) {
+										  if (value.isNotEmpty) {
+											_formKey.currentState?.validate();
+										  }
+										},
+									),
+									// Text Field
+									autoWidthTextField(
+										text: 'Enter Username',
+										text1: 'Create Username',
+										width: screenWidth,
+										controller: companynameController,
+										focusNode: _companynameFocusNode,
+										validator: (value) {
+										  if (value == null || value.isEmpty) {
+											return 'Company name cannot be blank';
+										  }
+										  return null;
+										},
+										onChanged: (value) {
+										  if (value.isNotEmpty) {
+											_formKey.currentState?.validate();
+										  }
+										},
+									),
 									Obx(() {
 									  return autoWidthTextField(
 										text: Appcontent.placeholderPassword,
+										text1: 'Password',
 										width: screenWidth,
 										controller: passwordController,
 										obscureText: registerController.showPassword.value,
@@ -269,6 +320,7 @@ class ConsumerRegisterView extends GetView<RegisterController> {
 										),
 									  );
 									}),
+									/*
 									// Label Above the TextField
 									Text(
 										Appcontent.confirmPassword,
@@ -278,9 +330,11 @@ class ConsumerRegisterView extends GetView<RegisterController> {
 										),
 									),
 									const SizedBox(height: 8), // Space between label and text field
+									*/
 									Obx(() {
 									  return autoWidthTextField(
 										text: Appcontent.placeholderPassword,
+										text1: 'Confirm Password',
 										width: screenWidth,
 										controller: passwordconfirmationController,
 										obscureText: registerController.showCPassword.value,
@@ -315,287 +369,6 @@ class ConsumerRegisterView extends GetView<RegisterController> {
 										),
 									  );
 									}),
-									  // Label Above the TextField
-									  Text(
-										Appcontent.companyName,
-										style: TextStyle(
-										  fontSize: 16,
-										  color: AppColor.formLabelColor, // Or any color you prefer
-										),
-									  ),
-									  const SizedBox(height: 8), // Space between label and text field
-
-									  // Text Field
-									  autoWidthTextField(
-										text: Appcontent.placeholdercompanyName,
-										width: screenWidth,
-										controller: companynameController,
-										focusNode: _companynameFocusNode,
-										validator: (value) {
-										  if (value == null || value.isEmpty) {
-											return 'Company name cannot be blank';
-										  }
-										  return null;
-										},
-										onChanged: (value) {
-										  if (value.isNotEmpty) {
-											_formKey.currentState?.validate();
-										  }
-										},
-									),
-									// Label Above the TextField
-									  Text(
-										Appcontent.country,
-										style: TextStyle(
-										  fontSize: 16,
-										  color: AppColor.formLabelColor, // Or any color you prefer
-										),
-									  ),
-									  const SizedBox(height: 8), // Space between label and text field
-									Obx(() {
-									  return dropdownFieldFinal(
-										text1: Appcontent.placeholderCountry,
-										width: screenWidth,
-										value: registerController.selectedCountry.value ?? '',  // Provide a fallback value if currentCValue is null
-										items: registerController.countryList
-										.map<DropdownMenuItem<String>>((country) => DropdownMenuItem<String>(
-											  value: country.id.toString(), // Use ID as the value
-											  child: Text(country.name),    // Display name
-											))
-										.toList(),
-										validator: (value) {
-										  if (value == null || value.isEmpty) {
-											return 'Please choose country';
-										  }
-										  return null;
-										},
-										onChanged: (newCountry) {
-											if (newCountry != null && newCountry.isNotEmpty) {
-												registerController.selectedCountry.value = newCountry;
-												
-												// Reset the city dropdown
-												registerController.cityList.clear(); // Clear all cities
-												registerController.selectedCity.value = null;
-												
-												// Load the states based on the selected country
-												final selectedCountryId = int.parse(newCountry);
-												registerController.fetchStateList(selectedCountryId);
-												
-												// Reset the state dropdown as well
-												registerController.selectedState.value = null;
-												registerController.stateList.clear(); // Clear all states if needed
-												
-												_formKey.currentState?.validate();  // Trigger form validation
-											} else {
-												_formKey.currentState?.validate();  // Trigger form validation
-											}
-										},
-									  );
-									}),
-									
-									// Label Above the TextField
-									  Text(
-										Appcontent.state,
-										style: TextStyle(
-										  fontSize: 16,
-										  color: AppColor.formLabelColor, // Or any color you prefer
-										),
-									  ),
-									  const SizedBox(height: 8), // Space between label and text field
-									Obx(() {
-									  return dropdownFieldFinal(
-										text1:  registerController.loadingState.value
-											? Appcontent.loadingStates // Hint text while loading
-											: Appcontent.placeholderState, // Default hint text
-										width: screenWidth,
-										value: registerController.selectedState.value ?? '',  // Provide a fallback value if currentCValue is null
-										items: registerController.loadingState.value
-											? [
-												DropdownMenuItem<String>(
-												  value: '',
-												  child: Text(Appcontent.loadingStates),
-												)
-											  ]
-											: registerController.stateList
-											.map<DropdownMenuItem<String>>((state) => DropdownMenuItem<String>(
-											  value: state.id.toString(), // Use ID as the value
-											  child: Text(state.name),    // Display name
-											))
-										.toList(),
-										isEnabled: !registerController.loadingState.value,
-										validator: (value) {
-										  if (value == null || value.isEmpty) {
-											return 'Please choose state';
-										  }
-										  return null;
-										},
-										onChanged: (newState) {
-											if (newState != null && newState.isNotEmpty) {
-												registerController.selectedState.value = newState;
-												
-												final selectedStateId = int.parse(newState);
-											
-												registerController.fetchCityList(selectedStateId);
-												
-												registerController.cityList.clear(); // Clear all cities
-												registerController.selectedCity.value = null;
-												
-												_formKey.currentState?.validate();  // Trigger form validation
-											} else {
-												_formKey.currentState?.validate();  // Trigger form validation
-											}
-										},
-									  );
-									}),
-									  
-									  // Label Above the TextField
-									  Text(
-										Appcontent.city,
-										style: TextStyle(
-										  fontSize: 16,
-										  color: AppColor.formLabelColor, // Or any color you prefer
-										),
-									  ),
-									  const SizedBox(height: 8), // Space between label and text field
-									Obx(() {
-										return dropdownFieldFinal(
-											text1: registerController.loadingCity.value
-												? Appcontent.loadingCities // Hint text while loading
-												: Appcontent.placeholderCity, // Default hint text
-											width: screenWidth,
-											value: registerController.selectedCity.value ?? '',
-											items: registerController.loadingCity.value
-												? [
-													DropdownMenuItem<String>(
-													  value: '',
-													  child: Text(Appcontent.loadingCities),
-													)
-												  ]
-												: registerController.cityList
-												.map<DropdownMenuItem<String>>((city) => DropdownMenuItem<String>(
-												  value: city.id.toString(), // Use ID as the value
-												  child: Text(city.name),    // Display name
-												))
-											.toList(),
-											isEnabled: !registerController.loadingCity.value,
-											validator: (value) {
-											  if (value == null || value.isEmpty) {
-												return 'Please choose city';
-											  }
-											  return null;
-											},
-											onChanged: (newCity) {
-												if (newCity != null) {
-													registerController.selectedCity.value = newCity;
-													_formKey.currentState?.validate();  // Trigger form validation
-												} else {
-													_formKey.currentState?.validate();  // Trigger form validation
-												}
-											},
-										);
-									}),
-									  // Text Field
-									  /*autoWidthTextField(
-										text: Appcontent.placeholderCity,
-										width: screenWidth,
-										controller: cityController,
-										focusNode: _cityFocusNode,
-										validator: (value) {
-										  if (value == null || value.isEmpty) {
-											return 'City cannot be blank';
-										  }
-										  return null;
-										},
-										onChanged: (value) {
-										  if (value.isNotEmpty) {
-											_formKey.currentState?.validate();
-										  }
-										},
-									  ),*/
-									  // Label Above the TextField
-									  Text(
-										Appcontent.address,
-										style: TextStyle(
-										  fontSize: 16,
-										  color: AppColor.formLabelColor, // Or any color you prefer
-										),
-									  ),
-									  const SizedBox(height: 8), // Space between label and text field
-
-									  // Text Field
-									  autoWidthTextField(
-										text: Appcontent.placeholderAddress,
-										width: screenWidth,
-										controller: addressController,
-										focusNode: _addressFocusNode,
-										validator: (value) {
-										  if (value == null || value.isEmpty) {
-											return 'Address cannot be blank';
-										  }
-										  return null;
-										},
-										onChanged: (value) {
-										  if (value.isNotEmpty) {
-											_formKey.currentState?.validate();
-										  }
-										},
-									  ),
-									  // Label Above the TextField
-									  Text(
-										Appcontent.zipCode,
-										style: TextStyle(
-										  fontSize: 16,
-										  color: AppColor.formLabelColor, // Or any color you prefer
-										),
-									  ),
-									  const SizedBox(height: 8), // Space between label and text field
-
-									  // Text Field
-									  autoWidthTextField(
-										text: Appcontent.placeholderZipCode,
-										width: screenWidth,
-										controller: zipcodeController,
-										focusNode: _zipcodeFocusNode,
-										validator: (value) {
-										  if (value == null || value.isEmpty) {
-											return 'Zip code cannot be blank';
-										  }
-										  return null;
-										},
-										onChanged: (value) {
-										  if (value.isNotEmpty) {
-											_formKey.currentState?.validate();
-										  }
-										},
-									  ),
-									  // Label Above the TextField
-									  Text(
-										Appcontent.phoneNumber,
-										style: TextStyle(
-										  fontSize: 16,
-										  color: AppColor.formLabelColor, // Or any color you prefer
-										),
-									  ),
-									  const SizedBox(height: 8), // Space between label and text field
-
-									  // Text Field
-									  autoWidthTextField(
-										text: Appcontent.placeholderPhoneNumber,
-										width: screenWidth,
-										controller: phoneController,
-										focusNode: _phoneFocusNode,
-										validator: (value) {
-										  if (value == null || value.isEmpty) {
-											return 'Phone number cannot be blank';
-										  }
-										  return null;
-										},
-										onChanged: (value) {
-										  if (value.isNotEmpty) {
-											_formKey.currentState?.validate();
-										  }
-										},
-									  ),
 									],
 								),
 							),
@@ -687,43 +460,86 @@ class ConsumerRegisterView extends GetView<RegisterController> {
 							Padding(
 							  padding: const EdgeInsets.only(top: 16, bottom: 16),
 							  child: Center(
-								child: OutlinedButton(
-								  style: OutlinedButton.styleFrom(
-									fixedSize: const Size(327, 56),
-									shape: RoundedRectangleBorder(
-									  borderRadius: BorderRadius.circular(100),
-									),
-									side: BorderSide.none, // Removes the border
-									backgroundColor: Colors.white, // Optional: Add background color if needed
-								  ),
-								  onPressed: () {
-									googleSignin(1); // Passing flag 1 for Consumer
-								  },
-								  child: const Row(
-									mainAxisAlignment: MainAxisAlignment.center,
-									children: [
-									  SizedBox(
-										height: 24,
-										width: 24,
-										child: Image(image: AssetImage(Appcontent.google)),
-									  ),
-									  SizedBox(width: 10),
-									  Text(
-										"Google",
-										style: TextStyle(
-										  fontSize: 16,
-										  color: Colors.black,
-										  fontFamily: 'Urbanist-semibold',
+								child: Column(
+								  children: [
+								  
+									// Consumer Google Sign-In Button
+									OutlinedButton(
+									  style: OutlinedButton.styleFrom(
+										fixedSize: Size(screenWidth, 56),
+										shape: RoundedRectangleBorder(
+										  borderRadius: BorderRadius.circular(15),
+										  side: BorderSide(color: AppColor.black, width: 1),
 										),
-										overflow: TextOverflow.ellipsis,
+										//side: BorderSide.none, // Removes the border
+										backgroundColor: Colors.white, // Optional: Add background color if needed
 									  ),
-									],
-								  ),
+									  onPressed: () {
+										//googleSignin(1); // Passing flag 1 for Consumer
+									  },
+									  child: const Row(
+										mainAxisAlignment: MainAxisAlignment.center,
+										children: [
+										  SizedBox(
+											height: 24,
+											width: 24,
+											child: Image(image: AssetImage(Appcontent.google)),
+										  ),
+										  SizedBox(width: 10),
+										  Text(
+											"Sign In with Google",
+											style: TextStyle(
+											  fontSize: 16,
+											  color: Colors.black,
+											  fontFamily: 'Urbanist-semibold',
+											),
+											overflow: TextOverflow.ellipsis,
+										  ),
+										],
+									  ),
+									),
+									const SizedBox(height: 20),
+									
+									// Retailer Google Sign-In Button
+									OutlinedButton(
+									  style: OutlinedButton.styleFrom(
+										fixedSize: Size(screenWidth, 56),
+										shape: RoundedRectangleBorder(
+										  borderRadius: BorderRadius.circular(15),
+										  side: BorderSide(color: AppColor.black, width: 1),
+										),
+										//side: BorderSide.none, // Removes the border
+										backgroundColor: Colors.white, // Optional: Add background color if needed
+									  ),
+									  onPressed: () {
+										//googleSignin(2); // Passing flag 2 for Retailer
+									  },
+									  child: const Row(
+										mainAxisAlignment: MainAxisAlignment.center,
+										children: [
+										  SizedBox(
+											height: 24,
+											width: 24,
+											child: Image(image: AssetImage(Appcontent.apple)),
+										  ),
+										  SizedBox(width: 10),
+										  Text(
+											"Sign In with Apple Id",
+											style: TextStyle(
+											  fontSize: 16,
+											  color: Colors.black,
+											  fontFamily: 'Urbanist-semibold',
+											),
+											overflow: TextOverflow.ellipsis,
+										  ),
+										],
+									  ),
+									),
+									
+								  ],
 								),
-
 							  ),
 							),
-							const SizedBox(height: 10),
 						],
 					  ),
 					),

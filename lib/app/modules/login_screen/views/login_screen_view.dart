@@ -65,7 +65,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
     loginScreenController.loadSavedCredentials(usernameController, passwordController);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      //backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SafeArea(
@@ -97,6 +97,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
                       padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 10),
                       child: autoWidthTextField(
                         text: 'Enter your username',
+                        text1: 'Username',
                         width: screenWidth,
                         controller: usernameController,
                         focusNode: _usernameFocusNode,
@@ -118,6 +119,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
                       child: Obx(() {
                         return autoWidthTextField(
                           text: Appcontent.placeholderPassword,
+						  text1: 'Password',
                           width: screenWidth,
                           controller: passwordController,
                           obscureText: loginScreenController.showPassword.value,
@@ -224,7 +226,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
                         Text('Don’t have an account ? ', style: TextStyle(color: Colors.grey[500], fontFamily: 'Urbanist-medium')),
                         TextButton(
                           onPressed: () {
-							Get.toNamed(Routes.CONSUMER_REGISTER);
+							Get.toNamed(Routes.CLIENT_REGISTER);
                           },
                           child: Text(Appcontent.signUpClient, style: TextStyle(color: AppColor.purple, fontFamily: 'Urbanist-semibold')),
                         ),
@@ -237,7 +239,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
                         Text('Don’t have an account ? ', style: TextStyle(color: Colors.grey[500], fontFamily: 'Urbanist-medium')),
                         TextButton(
                           onPressed: () {
-							Get.toNamed(Routes.RETAILER_REGISTER);
+							Get.toNamed(Routes.EMPLOYEE_REGISTER);
                           },
                           child: Text(Appcontent.signUpEmployee, style: TextStyle(color: AppColor.purple, fontFamily: 'Urbanist-semibold')),
                         ),
@@ -269,15 +271,16 @@ class LoginScreenView extends GetView<LoginScreenController> {
 							// Consumer Google Sign-In Button
 							OutlinedButton(
 							  style: OutlinedButton.styleFrom(
-								fixedSize: const Size(327, 56),
+								fixedSize: Size(screenWidth, 56),
 								shape: RoundedRectangleBorder(
-								  borderRadius: BorderRadius.circular(100),
+								  borderRadius: BorderRadius.circular(15),
+								  side: BorderSide(color: AppColor.black, width: 1),
 								),
-								side: BorderSide.none, // Removes the border
+								//side: BorderSide.none, // Removes the border
 								backgroundColor: Colors.white, // Optional: Add background color if needed
 							  ),
 							  onPressed: () {
-								googleSignin(1); // Passing flag 1 for Consumer
+								//googleSignin(1); // Passing flag 1 for Consumer
 							  },
 							  child: const Row(
 								mainAxisAlignment: MainAxisAlignment.center,
@@ -289,7 +292,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
 								  ),
 								  SizedBox(width: 10),
 								  Text(
-									"Consumer Google",
+									"Sign In with Google",
 									style: TextStyle(
 									  fontSize: 16,
 									  color: Colors.black,
@@ -305,15 +308,16 @@ class LoginScreenView extends GetView<LoginScreenController> {
 							// Retailer Google Sign-In Button
 							OutlinedButton(
 							  style: OutlinedButton.styleFrom(
-								fixedSize: const Size(327, 56),
+								fixedSize: Size(screenWidth, 56),
 								shape: RoundedRectangleBorder(
-								  borderRadius: BorderRadius.circular(100),
+								  borderRadius: BorderRadius.circular(15),
+								  side: BorderSide(color: AppColor.black, width: 1),
 								),
-								side: BorderSide.none, // Removes the border
+								//side: BorderSide.none, // Removes the border
 								backgroundColor: Colors.white, // Optional: Add background color if needed
 							  ),
 							  onPressed: () {
-								googleSignin(2); // Passing flag 2 for Retailer
+								//googleSignin(2); // Passing flag 2 for Retailer
 							  },
 							  child: const Row(
 								mainAxisAlignment: MainAxisAlignment.center,
@@ -321,11 +325,11 @@ class LoginScreenView extends GetView<LoginScreenController> {
 								  SizedBox(
 									height: 24,
 									width: 24,
-									child: Image(image: AssetImage(Appcontent.google)),
+									child: Image(image: AssetImage(Appcontent.apple)),
 								  ),
 								  SizedBox(width: 10),
 								  Text(
-									"Retailer Google",
+									"Sign In with Apple Id",
 									style: TextStyle(
 									  fontSize: 16,
 									  color: Colors.black,

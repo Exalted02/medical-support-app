@@ -10,7 +10,6 @@ class CommonBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
   final userController = Get.find<UserController>();
   final CartController cartController = Get.put(CartController());
-  //final cartController = Get.find<CartController>();
 
   CommonBottomNavigationBar({required this.currentIndex});
 
@@ -36,74 +35,63 @@ class CommonBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: _onBottomNavTap,
-        type: BottomNavigationBarType.fixed,
-        iconSize: 30.0,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: currentIndex == 0 ? AppColor.purple : AppColor.BlackGreyscale,
-              size: 30.0,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search,
-              color: currentIndex == 1 ? AppColor.purple : AppColor.BlackGreyscale,
-              size: 30.0,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.notifications,
-              color: currentIndex == 2 ? AppColor.purple : AppColor.BlackGreyscale,
-              size: 30.0,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Stack(
-              children: [
-                Icon(
-                  Icons.shopping_cart,
-                  color: currentIndex == 3 ? AppColor.purple : AppColor.BlackGreyscale,
-                  size: 30.0,
-                ),
-                if (cartController.itemCount.value > 0)
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: CircleAvatar(
-                      radius: 10,
-                      backgroundColor: Colors.red,
-                      child: Text(
-                        '${cartController.itemCount.value}',
-                        style: TextStyle(fontSize: 12, color: Colors.white),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: CircleAvatar(
-              radius: 15,
-              backgroundImage: userController.profilePicture.value != null && userController.profilePicture.value.isNotEmpty
-                  ? NetworkImage(userController.profilePicture.value)
-                  : AssetImage(Appcontent.defaultLogo) as ImageProvider,
-              backgroundColor: Colors.transparent,
-            ),
-            label: '',
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white, // Background color
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
           ),
         ],
-      );
-    });
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25),
+        ),
+        child: BottomAppBar(
+          shape: CircularNotchedRectangle(), // Curve for floating button
+          notchMargin: 8.0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _navItem(Icons.email, "Email", 0),
+              _navItem(Icons.people, "Employees", 1),
+              SizedBox(width: 40), // Space for floating button
+              _navItem(Icons.chat, "Chat", 3),
+              _navItem(Icons.person, "Profile", 4),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _navItem(IconData icon, String label, int index) {
+    return GestureDetector(
+      onTap: () => _onBottomNavTap(index),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            color: currentIndex == index ? AppColor.purple : AppColor.BlackGreyscale,
+            size: 24,
+          ),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              color: currentIndex == index ? AppColor.purple : AppColor.BlackGreyscale,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

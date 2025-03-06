@@ -7,6 +7,7 @@ class Appcontent {
   static const String backgraund = "assets/Background.png";
 
   static const String google = "assets/google.png";
+  static const String apple = "assets/apple.png";
   static const String orderSuccess = "assets/order_success.png";
 
   static const String forgot = "assets/forgot.png";
@@ -70,7 +71,7 @@ class Appcontent {
   static const String placeholderPhoneNumber = "Enter your phone number";
   static const String signUp = "SIGN UP";
   static const String alreadyHaveAnAccount = "Already have an account? ";
-  static const String loginSmall = "Login";
+  static const String loginSmall = "Sign In";
   static const String signUpWith = "Sign Up With";
   
   //SignUp Retailer
