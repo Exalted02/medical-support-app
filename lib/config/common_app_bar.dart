@@ -59,9 +59,9 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                   // User Profile & Name
                   Row(
                     children: [
-                      CircleAvatar(
-                        backgroundImage: NetworkImage("https://via.placeholder.com/150"),
-                      ),
+					  CircleAvatar(
+						backgroundImage: AssetImage("assets/user.jpeg"),
+					  ),
                       SizedBox(width: 8),
                       Text("Kiran", style: TextStyle(color: Colors.white, fontSize: 16)),
                     ],

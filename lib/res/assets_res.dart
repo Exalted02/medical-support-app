@@ -28,4 +28,5 @@ class AssetsRes {
   static const String SLIDER3 = 'assets/slider3.png';
   static const String SPLASH_LOGO = 'assets/splash-logo.png';
   static const String SPLASH_LOGO22 = 'assets/splash-logo22.png';
+  static const String USER = 'assets/user.jpeg';
 }

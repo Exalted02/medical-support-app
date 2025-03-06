@@ -76,6 +76,7 @@ flutter:
     - assets/slider3.png
     - assets/splash-logo.png
     - assets/splash-logo22.png
+    - assets/user.jpeg
   fonts:
     - family: Urbanist-Black
       fonts:
