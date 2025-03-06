@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medicalsupport/config/app_color.dart';
+import 'package:medicalsupport/app/routes/app_pages.dart';
 
 class CommonDrawer extends StatelessWidget {
   @override
@@ -54,15 +55,15 @@ class CommonDrawer extends StatelessWidget {
 				child: ListView(
 				  padding: EdgeInsets.zero,
 				  children: [
-					_buildDrawerItem(Icons.dashboard, "Dashboard", "/dashboard"),
-					_buildDrawerItem(Icons.message, "Chat", "/chat"),
-					/*_buildDrawerItem(Icons.calendar_today, "Calendar", "/calendar"),
-					_buildDrawerItem(Icons.assignment, "Assigned Tickets", "/assigned_tickets"),
-					_buildDrawerItem(Icons.history, "History", "/history"),
+					_buildDrawerItem(Icons.dashboard, "Dashboard", Routes.HOME, context),
+					_buildDrawerItem(Icons.message, "Chat", Routes.PROFILE_SCREEN, context),
+					/*_buildDrawerItem(Icons.calendar_today, "Calendar", "/calendar", context),
+					_buildDrawerItem(Icons.assignment, "Assigned Tickets", "/assigned_tickets", context),
+					_buildDrawerItem(Icons.history, "History", "/history", context),
 					Divider(),
-					_buildDrawerItem(Icons.policy, "Policies and Procedures", "/policies"),
-					_buildDrawerItem(Icons.video_library, "Video Learning", "/video_learning"),
-					_buildDrawerItem(Icons.update, "Updates", "/updates"),*/
+					_buildDrawerItem(Icons.policy, "Policies and Procedures", "/policies", context),
+					_buildDrawerItem(Icons.video_library, "Video Learning", "/video_learning", context),
+					_buildDrawerItem(Icons.update, "Updates", "/updates", context),*/
 					ListTile(
 					  leading: Icon(Icons.logout, color: Colors.red),
 					  title: Text("Logout", style: TextStyle(color: Colors.red)),
@@ -80,11 +81,12 @@ class CommonDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildDrawerItem(IconData icon, String title, String route) {
+  Widget _buildDrawerItem(IconData icon, String title, String route, BuildContext context) {
     return ListTile(
       leading: Icon(icon, color: AppColor.purple),
       title: Text(title),
       onTap: () {
+	    Navigator.pop(context);
         Get.toNamed(route);
       },
     );

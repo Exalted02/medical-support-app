@@ -13,34 +13,17 @@ import '../modules/register/bindings/employee_register_binding.dart';
 import '../modules/register/views/employee_register_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
-import 'package:medicalsupport/app/modules/product/bindings/product_binding.dart';
-import 'package:medicalsupport/app/modules/product/views/product_view.dart';
 
-import '../modules/home/views/wall_photo_view.dart';
-//import '../modules/shop_screen/bindings/shop_screen_binding.dart';
-//import '../modules/shop_screen/views/shop_screen_view.dart';
 import '../modules/forgot_screen/views/forgot_screen_view.dart';
 import '../modules/otp_verification_screen/views/otp_verification_screen_view.dart';
 import '../modules/reset_password_screen/views/reset_password_screen_view.dart';
 import '../modules/otp_verification_screen/bindings/otp_verification_screen_binding.dart';
 import '../modules/reset_password_screen/bindings/reset_password_screen_binding.dart';
 import '../modules/forgot_screen/bindings/forgot_screen_binding.dart';
-import '../modules/serach_screen/bindings/serach_screen_binding.dart';
-import '../modules/serach_screen/views/serach_screen_view.dart';
-import '../modules/notification_screen/bindings/notification_screen_binding.dart';
-import '../modules/notification_screen/views/notification_screen_view.dart';
 import '../modules/profile_screen/bindings/profile_screen_binding.dart';
 import '../modules/profile_screen/views/profile_screen_view.dart';
 import '../modules/editprofile_screen/bindings/editprofile_screen_binding.dart';
 import '../modules/editprofile_screen/views/editprofile_screen_view.dart';
-import '../modules/wish_list/bindings/wish_list_binding.dart';
-import '../modules/wish_list/views/wish_list_create.dart';
-import '../modules/order_screen/bindings/order_binding.dart';
-import '../modules/order_screen/views/cart.dart';
-import '../modules/order_screen/views/my_orders_page.dart';
-import '../modules/order_screen/views/my_wishlist_page.dart';
-import '../modules/order_screen/views/order_details.dart';
-import '../modules/order_screen/views/wishlist_details.dart';
 
 import 'package:medicalsupport/app/modules/activity_screen/activity_screen_binding.dart';
 import 'package:medicalsupport/app/modules/activity_screen/activity_screen_view.dart';
@@ -80,7 +63,7 @@ class AppPages {
       name: _Paths.LOGIN_SCREEN,
       page: () => LoginScreenView(),
       binding: LoginScreenBinding(),
-    ),	
+    ),
     GetPage(
       name: _Paths.FORGOT_SCREEN,
       page: () => ForgotScreenView(),
@@ -108,48 +91,6 @@ class AppPages {
       page: () => HomeView(),
       binding: HomeBinding(),
 	  middlewares: [AuthGuard()], // After Login
-    ),	
-    GetPage(
-      name: _Paths.SERACH_SCREEN,
-      page: () => SerachScreenView(),
-      binding: SerachScreenBinding(),
-	  middlewares: [AuthGuard()], // After Login
-    ),
-	GetPage(
-		name: Routes.PRODUCTVIEW_SCREEN,
-		page: () {
-			final args = Get.arguments as Map<String, dynamic>;
-			return ProductView(productId: args['productId']); // Pass userId to the view
-		},
-		binding: ProductBinding(),
-		middlewares: [AuthGuard()], // After Login
-    ),
-	/*GetPage(
-		name: _Paths.PRODUCTVIEW_SCREEN,
-		page: () {
-			final args = Get.arguments as Map<String, dynamic>?;
-			final productId = args?['productId'] ?? '';
-			print('Navigating to ProductView with productId: $productId');
-			return ProductView(productId: productId);
-		},
-		binding: ProductBinding(),
-		middlewares: [AuthGuard()], // After Login
-	),*/
-	GetPage(
-		name: _Paths.WALLPHOTO, 
-		page: () => WallPhotoView(),
-		binding: HomeBinding(),
-	),
-	/*GetPage(
-      name: _Paths.SHOP_SCREEN,
-      page: () => ShopScreenView(),
-      binding: ShopScreenBinding(),
-    ),*/
-	GetPage(
-      name: _Paths.NOTIFICATION_SCREEN,
-      page: () => NotificationScreenView(),
-      binding: NotificationScreenBinding(),
-	  //middlewares: [AuthGuard()], // After Login
     ),
     GetPage(
       name: _Paths.PROFILE_SCREEN,
@@ -163,35 +104,5 @@ class AppPages {
       binding: EditprofileScreenBinding(),
 	  middlewares: [AuthGuard()], // After Login
     ),
-	GetPage(
-		name: _Paths.WISHLIST_CREATE, 
-		page: () => WishListCreateView(),
-		binding: WishListBinding(),
-	),	
-	GetPage(
-		name: Routes.MY_WISHLIST, 
-		page: () => MyWishlistPage(),
-		binding: WishListBinding(),
-	),
-	GetPage(
-		name: _Paths.CART_PAGE, 
-		page: () => CartPage(),
-		binding: OrderBinding(),
-	),
-	GetPage(
-		name: Routes.MY_ORDERS, 
-		page: () => MyOrdersPage(),
-		binding: OrderBinding(),
-	),		
-	GetPage(
-		name: Routes.ORDER_DETAILS, 
-		page: () => OrderDetailsPage(),
-		binding: OrderBinding(),
-	),	
-	GetPage(
-		name: Routes.WISHLIST_DETAILS, 
-		page: () => WishlistDetailsPage(),
-		binding: OrderBinding(),
-	),	
   ];
 }

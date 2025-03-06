@@ -4,12 +4,10 @@ import 'package:medicalsupport/config/app_color.dart';
 import 'package:medicalsupport/config/app_contents.dart';
 import 'package:medicalsupport/app/routes/app_pages.dart';
 import 'package:medicalsupport/app/modules/profile_screen/controllers/user_controller.dart';
-import 'package:medicalsupport/app/modules/order_screen/controllers/cart_controller.dart';
 
 class CommonBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
   final userController = Get.find<UserController>();
-  final CartController cartController = Get.put(CartController());
 
   CommonBottomNavigationBar({required this.currentIndex});
 
