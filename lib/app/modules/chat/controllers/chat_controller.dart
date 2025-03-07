@@ -7,11 +7,11 @@ import 'package:medicalsupport/services/api_service.dart';
 import 'package:medicalsupport/app/routes/app_pages.dart';
 import 'package:medicalsupport/config/app_contents.dart';
 
-class HomeController extends GetxController {
-	//TODO: Implement HomeController
+class ChatController extends GetxController {
+	//TODO: Implement ChatController
 	final ApiService apiService;
 	var isLoading = false.obs;  // RxBool
-	HomeController(this.apiService);
+	ChatController(this.apiService);
 	
 	@override
 	void onInit() {

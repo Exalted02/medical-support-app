@@ -91,18 +91,18 @@ class EditprofileScreenController extends GetxController {
 
 				genderList.assignAll(fetchedGenderList); // This will now work
 			} else {
-				SnackbarHelper.showErrorSnackbar(
+				/*SnackbarHelper.showErrorSnackbar(
 				  title: Appcontent.snackbarTitleError, 
 				  message: response['message'],
 				  position: SnackPosition.BOTTOM, // Custom position
-				);
+				);*/
 			}
 		} catch (e) {
-			SnackbarHelper.showErrorSnackbar(
+			/*SnackbarHelper.showErrorSnackbar(
 			  title: Appcontent.snackbarTitleError, 
 			  message: Appcontent.snackbarCatchErrorMsg, 
 			  position: SnackPosition.BOTTOM, // Custom position
-			);
+			);*/
 		}
 	}
 	//fetch country lists
@@ -118,18 +118,18 @@ class EditprofileScreenController extends GetxController {
 
 				countryList.assignAll(fetchedCountryList); // This will now work
 			} else {
-				SnackbarHelper.showErrorSnackbar(
+				/*SnackbarHelper.showErrorSnackbar(
 				  title: Appcontent.snackbarTitleError, 
 				  message: response['message'],
 				  position: SnackPosition.BOTTOM, // Custom position
-				);
+				);*/
 			}
 		} catch (e) {
-			SnackbarHelper.showErrorSnackbar(
+			/*SnackbarHelper.showErrorSnackbar(
 			  title: Appcontent.snackbarTitleError, 
 			  message: Appcontent.snackbarCatchErrorMsg, 
 			  position: SnackPosition.BOTTOM, // Custom position
-			);
+			);*/
 		}
 	}
 	// Fetch the state list based on the selected country
@@ -151,18 +151,18 @@ class EditprofileScreenController extends GetxController {
 					.toList();
 				stateList.assignAll(fetchedStateList);
 			} else {
-				SnackbarHelper.showErrorSnackbar(
+				/*SnackbarHelper.showErrorSnackbar(
 				  title: Appcontent.snackbarTitleError,
 				  message: response['message'],
 				  position: SnackPosition.BOTTOM,
-				);
+				);*/
 			}
 		} catch (e) {
-			SnackbarHelper.showErrorSnackbar(
+			/*SnackbarHelper.showErrorSnackbar(
 				title: Appcontent.snackbarTitleError,
 				message: Appcontent.snackbarCatchErrorMsg,
 				position: SnackPosition.BOTTOM,
-			);
+			);*/
 		} finally {
 			loadingState.value = false; // Set loading to false
 			isFetchingStates.value = false;
@@ -182,18 +182,18 @@ class EditprofileScreenController extends GetxController {
 					.toList();
 				cityList.assignAll(fetchedCityList);
 			} else {
-				SnackbarHelper.showErrorSnackbar(
+				/*SnackbarHelper.showErrorSnackbar(
 					title: Appcontent.snackbarTitleError,
 					message: response['message'],
 					position: SnackPosition.BOTTOM,
-				);
+				);*/
 			}
 		} catch (e) {
-			SnackbarHelper.showErrorSnackbar(
+			/*SnackbarHelper.showErrorSnackbar(
 				title: Appcontent.snackbarTitleError,
 				message: Appcontent.snackbarCatchErrorMsg,
 				position: SnackPosition.BOTTOM,
-			);
+			);*/
 		} finally {
 			loadingCity.value = false; // Set loading to false
 			isFetchingCities.value = false;
@@ -293,27 +293,27 @@ class EditprofileScreenController extends GetxController {
 					"gender_id": gender_id
 				});
 				
-				SnackbarHelper.showSuccessSnackbar(
+				/*SnackbarHelper.showSuccessSnackbar(
 				  title: Appcontent.snackbarTitleSuccess, 
 				  //message: response['message'],
 				  message: 'success',
 				  position: SnackPosition.BOTTOM, // Custom position
-				);
+				);*/
 			} else {
-			  SnackbarHelper.showErrorSnackbar(
+			  /*SnackbarHelper.showErrorSnackbar(
 				  title: Appcontent.snackbarTitleError,
 				  //message: response['message'],
 				  message: 'error',
 				  position: SnackPosition.BOTTOM, // Custom position
-				);
+				);*/
 			}
 		} catch (e) {
 			print('Error occurred: $e'); // Print the error if any occurs
-			SnackbarHelper.showErrorSnackbar(
+			/*SnackbarHelper.showErrorSnackbar(
 			  title: Appcontent.snackbarTitleError, 
 			  message: Appcontent.snackbarCatchErrorMsg, 
 			  position: SnackPosition.BOTTOM, // Custom position
-			);
+			);*/
 		} finally {
 			isSubmittingData(false);
 			isLoading.value = false;
@@ -378,28 +378,28 @@ print('image upload response are : $response');
 			});
 				
 		  // Handle successful upload
-			SnackbarHelper.showSuccessSnackbar(
+			/*SnackbarHelper.showSuccessSnackbar(
 			  title: Appcontent.snackbarTitleSuccess, 
 			  message: response['message'],
 			  position: SnackPosition.BOTTOM, // Custom position
-			);
+			);*/
 		  
 		} else {
 		  // Handle upload error
-			SnackbarHelper.showErrorSnackbar(
+			/*SnackbarHelper.showErrorSnackbar(
 			  title: Appcontent.snackbarTitleError,
 			  message: response['message'],
 			  position: SnackPosition.BOTTOM, // Custom position
-			);
+			);*/
 		}
 	  } catch (e) {
 		print('Error: $e');
 		// Handle exception
-		SnackbarHelper.showErrorSnackbar(
+		/*SnackbarHelper.showErrorSnackbar(
 		  title: Appcontent.snackbarTitleError, 
 		  message: Appcontent.snackbarCatchErrorMsg, 
 		  position: SnackPosition.BOTTOM, // Custom position
-		);
+		);*/
 	  }
 	}
 	
@@ -422,11 +422,11 @@ print('image upload response are : $response');
 					"profile_image": ""
 				});
 				
-				SnackbarHelper.showSuccessSnackbar(
+				/*SnackbarHelper.showSuccessSnackbar(
 				  title: Appcontent.snackbarTitleSuccess, 
 				  message: response['message'],
 				  position: SnackPosition.BOTTOM, // Custom position
-				);
+				);*/
 			  
 			  /*final responseData = await apiService.fetchProfileDataForEditProfilePage(1, 1, 1, 1);
 				final responseF = responseData['data'];
@@ -438,18 +438,18 @@ print('image upload response are : $response');
 					profileData.value = ProfileData(first_name: ''); // Default value if data is not valid
 				}*/
 			} else {
-				SnackbarHelper.showErrorSnackbar(
+				/*SnackbarHelper.showErrorSnackbar(
 				  title: Appcontent.snackbarTitleError,
 				  message: response['message'],
 				  position: SnackPosition.BOTTOM, // Custom position
-				);
+				);*/
 			}
 		} catch (e) {
-			SnackbarHelper.showErrorSnackbar(
+			/*SnackbarHelper.showErrorSnackbar(
 			  title: Appcontent.snackbarTitleError, 
 			  message: Appcontent.snackbarCatchErrorMsg, 
 			  position: SnackPosition.BOTTOM, // Custom position
-			);
+			);*/
 		}
 	}
 	

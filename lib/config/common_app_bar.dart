@@ -7,7 +7,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     return PreferredSize(
       preferredSize: Size.fromHeight(120), // Ensures enough space
       child: Container(
-        color: AppColor.clientTheme, // Background color matching your image
+        color: AppColor.clientTheme,
         padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top), // Prevents overlap
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

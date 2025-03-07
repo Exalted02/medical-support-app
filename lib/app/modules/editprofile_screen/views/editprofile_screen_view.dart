@@ -14,6 +14,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:medicalsupport/app/modules/activity_screen/activity_screen_view.dart';
 import 'package:medicalsupport/app/modules/profile_screen/controllers/user_controller.dart';
 import '../controllers/editprofile_screen_controller.dart';
+import 'package:medicalsupport/config/common_bottom_navigation_bar.dart';
+import 'package:medicalsupport/config/common_bottom_navigation_floating_button.dart';
 
 class EditprofileScreenView extends StatefulWidget {
   EditprofileScreenView({Key? key}) : super(key: key);
@@ -151,7 +153,7 @@ class _EditprofileScreenViewState extends State<EditprofileScreenView> {
         ),
         title: const Text('Edit Profile', style: TextStyle(fontSize: 18, color: Colors.black)),
         centerTitle: true,
-        actions: [
+        /*actions: [
           SizedBox(
             height: 24,
             width: 24,
@@ -166,7 +168,7 @@ class _EditprofileScreenViewState extends State<EditprofileScreenView> {
                 child: const Icon(Icons.settings, color: Colors.black)),
           ),
           const SizedBox(width: 15),
-        ],
+        ],*/
       ),
       body: Obx(() {
         if (editprofileScreenController.isFetchingData.value) {
@@ -939,6 +941,9 @@ class _EditprofileScreenViewState extends State<EditprofileScreenView> {
           );
         }
       }),
+	  floatingActionButton: CommonBottomNavigationFloatingButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+	  bottomNavigationBar: CommonBottomNavigationBar(currentIndex: 4),
     );
   }
 

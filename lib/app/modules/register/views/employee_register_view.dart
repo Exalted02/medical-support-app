@@ -196,7 +196,7 @@ class _EmployeeRegisterViewState extends State<EmployeeRegisterView> {
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          //padding: const EdgeInsets.symmetric(horizontal: 8),
           child: ConstrainedBox(
             constraints: BoxConstraints(
               minHeight: MediaQuery.of(context).size.height, // Ensures the container stretches to fill available space

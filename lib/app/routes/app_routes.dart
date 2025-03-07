@@ -27,6 +27,8 @@ abstract class Routes {
 	static const CART_PAGE = _Paths.CART_PAGE;
 	static const MY_ORDERS = _Paths.MY_ORDERS;
 	static const MY_WISHLIST = _Paths.MY_WISHLIST;
+	static const CHAT = _Paths.CHAT;
+	static const CHAT_LIST = _Paths.CHAT_LIST;
   
   static const EDITPROFILE_SCREEN = _Paths.EDITPROFILE_SCREEN;
   static const EDITPICTRE_SCREEN = _Paths.EDITPICTRE_SCREEN;
@@ -56,6 +58,8 @@ abstract class _Paths {
 	static const EDITPROFILE_SCREEN = '/editprofile-screen';
 	static const WISHLIST_CREATE = '/wishlist-create';
 	static const MY_WISHLIST = '/my-wishlist';
+	static const CHAT = '/chat';
+	static const CHAT_LIST = '/chat-list';
 	static const CART_PAGE = '/cart';
 	static const MY_ORDERS = '/my-orders';
 

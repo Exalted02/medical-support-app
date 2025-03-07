@@ -9,21 +9,23 @@ class CommonBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
   final userController = Get.find<UserController>();
 
-  CommonBottomNavigationBar({required this.currentIndex});
-
+  //CommonBottomNavigationBar({required this.currentIndex});
+  CommonBottomNavigationBar({required this.currentIndex}) {
+    //print('CurrentIndex: $currentIndex');
+  }
   void _onBottomNavTap(int index) {
     switch (index) {
       case 0:
         Get.toNamed(Routes.HOME);
         break;
       case 1:
-        Get.toNamed(Routes.SERACH_SCREEN);
+        Get.toNamed(Routes.HOME);
         break;
       case 2:
-        Get.toNamed(Routes.NOTIFICATION_SCREEN);
+        Get.toNamed(Routes.HOME);
         break;
       case 3:
-        Get.toNamed(Routes.CART_PAGE);
+        Get.toNamed(Routes.CHAT_LIST);
         break;
       case 4:
         Get.toNamed(Routes.PROFILE_SCREEN);
@@ -71,6 +73,7 @@ class CommonBottomNavigationBar extends StatelessWidget {
   }
 
   Widget _navItem(IconData icon, String label, int index) {
+    //print('index is $index');
     return GestureDetector(
       onTap: () => _onBottomNavTap(index),
       child: Column(

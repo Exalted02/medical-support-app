@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medicalsupport/config/app_color.dart';
+import 'package:medicalsupport/app/routes/app_pages.dart';
 
 class CommonBottomNavigationFloatingButton extends StatelessWidget {
   @override
@@ -19,7 +20,7 @@ class CommonBottomNavigationFloatingButton extends StatelessWidget {
       ),
       child: FloatingActionButton(
         onPressed: () {
-          Get.toNamed("/dashboard");
+          Get.toNamed(Routes.HOME);
         },
         backgroundColor: AppColor.clientTheme,
         foregroundColor: Colors.white,

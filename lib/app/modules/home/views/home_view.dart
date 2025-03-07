@@ -3,6 +3,7 @@ import 'package:medicalsupport/config/common_bottom_navigation_bar.dart';
 import 'package:medicalsupport/config/common_bottom_navigation_floating_button.dart';
 import 'package:medicalsupport/config/common_drawer.dart';
 import 'package:medicalsupport/config/common_app_bar.dart'; // Import Common AppBar
+import 'package:fl_chart/fl_chart.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -92,7 +93,83 @@ class _HomeViewState extends State<HomeView> {
         children: [
           Text("Tickets Analytics", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           SizedBox(height: 10),
-          Placeholder(fallbackHeight: 100), // Replace with chart widget
+          SizedBox(
+			height: 200,
+			child: LineChart(
+			  LineChartData(
+				gridData: FlGridData(show: false),
+				borderData: FlBorderData(
+				  border: Border.all(color: Colors.grey.shade300),
+				),
+				titlesData: FlTitlesData(
+				  leftTitles: AxisTitles(
+					sideTitles: SideTitles(
+					  showTitles: true,
+					  reservedSize: 40,
+					  getTitlesWidget: (double value, TitleMeta meta) {
+						return Text(value.toInt().toString(), style: TextStyle(fontSize: 12));
+					  },
+					),
+				  ),
+				  bottomTitles: AxisTitles(
+					sideTitles: SideTitles(
+					  showTitles: true,
+					  getTitlesWidget: (double value, TitleMeta meta) {
+						switch (value.toInt()) {
+						  case 0:
+							return Text('Jan');
+						  case 1:
+							return Text('Feb');
+						  case 2:
+							return Text('Mar');
+						  case 3:
+							return Text('Apr');
+						  case 4:
+							return Text('May');
+						  case 5:
+							return Text('Jun');
+						  default:
+							return Text('');
+						}
+					  },
+					),
+				  ),
+				),
+				lineBarsData: [
+				  LineChartBarData(
+					spots: [
+					  FlSpot(0, 12), // January
+					  FlSpot(1, 18), // February
+					  FlSpot(2, 10), // March
+					  FlSpot(3, 24), // April
+					  FlSpot(4, 16), // May
+					  FlSpot(5, 20), // June
+					],
+					isCurved: true,
+					color: Colors.blue,
+					barWidth: 3,
+					isStrokeCapRound: true,
+					belowBarData: BarAreaData(show: true, color: Colors.blue.withOpacity(0.3)),
+				  ),
+				  LineChartBarData(
+					spots: [
+					  FlSpot(0, 30), // January
+					  FlSpot(1, 12), // February
+					  FlSpot(2, 20), // March
+					  FlSpot(3, 18), // April
+					  FlSpot(4, 40), // May
+					  FlSpot(5, 10), // June
+					],
+					isCurved: true,
+					color: Colors.purple,
+					barWidth: 3,
+					isStrokeCapRound: true,
+					belowBarData: BarAreaData(show: true, color: Colors.blue.withOpacity(0.3)),
+				  ),
+				],
+			  ),
+			),
+		  ),
         ],
       ),
     );

@@ -13,6 +13,9 @@ import '../modules/register/bindings/employee_register_binding.dart';
 import '../modules/register/views/employee_register_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/chat/bindings/chat_binding.dart';
+import '../modules/chat/views/chat_view.dart';
+import '../modules/chat/views/chat_list.dart';
 
 import '../modules/forgot_screen/views/forgot_screen_view.dart';
 import '../modules/otp_verification_screen/views/otp_verification_screen_view.dart';
@@ -102,6 +105,18 @@ class AppPages {
       name: _Paths.EDITPROFILE_SCREEN,
       page: () => EditprofileScreenView(),
       binding: EditprofileScreenBinding(),
+	  middlewares: [AuthGuard()], // After Login
+    ),
+    GetPage(
+      name: _Paths.CHAT,
+      page: () => ChatView(),
+      binding: ChatBinding(),
+	  middlewares: [AuthGuard()], // After Login
+    ),
+    GetPage(
+      name: _Paths.CHAT_LIST,
+      page: () => ChatListPage(),
+      binding: ChatBinding(),
 	  middlewares: [AuthGuard()], // After Login
     ),
   ];
