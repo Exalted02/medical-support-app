@@ -45,49 +45,29 @@ class ApiService extends BaseApiService {
 		return response;
 	}
 	//Customer Register
-	Future<Map<String, dynamic>> store_customer(String first_name, String last_name, String email, String password, String confirmed_password, String company_name, String address, int city, int state, int country, String zipcode, String phone_number) async {
-		final response = await post(ApiEndpoints.storeCustomer, {'first_name': first_name, 'last_name': last_name, 'email': email, 'password': password, 'confirmed_password': confirmed_password, 'company_name': company_name, 'address': address, 'city': city, 'state': state, 'country': country, 'zipcode': zipcode, 'phone_number': phone_number});
+	Future<Map<String, dynamic>> store_client(String first_name, String last_name, String email, String phone_number, String fax, String company_name, String user_name, String password, String confirmed_password) async {
+		final response = await post(ApiEndpoints.storeClient, {'first_name': first_name, 'last_name': last_name, 'email': email, 'phone_number': phone_number, 'fax': fax, 'company_name': company_name, 'user_name': user_name, 'password': password, 'confirmed_password': confirmed_password});
 		if (response.containsKey('access_token')) {
 			saveToken(response['access_token']);
 		}
 		return response;
 	}
 	//Retailer Register
-	Future<Map<String, dynamic>> store_retailer(File file, {required String first_name, required String last_name, required String email, required String password, required String confirmed_password, required String company_name, required String address, required int city, required int state, required int country, required String zipcode, required String phone_number}) async {
+	Future<Map<String, dynamic>> store_employee(String first_name, String last_name, String email, String department, String username, String password, String confirmed_password) async {
 		// Create Dio instance
 		Dio dio = Dio(BaseOptions(
 			validateStatus: (status) => status != null && status < 500,
 		));
-	
-		print('First Name: $first_name');
-		print('Last Name: $last_name');
-		print('Email: $email');
-		print('Password: $password');
-		print('Confirm Password: $confirmed_password');
-		print('Company Name: $company_name');
-		print('Address: $address');
-		print('City: $city');
-		print('State: $state');
-		print('Country: $country');
-		print('Zipcode: $zipcode');
-		print('Phone Number: $phone_number');
-		print('File: $file');
-
+		
 		// Prepare FormData object
 		FormData formData = FormData.fromMap({
 			'first_name': first_name,
 			'last_name': last_name,
 			'email': email,
+			'department': department,
+			'username': username,
 			'password': password,
 			'confirmed_password': confirmed_password,
-			'company_name': company_name,
-			'address': address,
-			'city': city,
-			'state': state,
-			'country': country,
-			'zipcode': zipcode,
-			'phone_number': phone_number,
-			'upload_tax_lisence': await MultipartFile.fromFile(file.path), // File upload field
 		});
 
 		// Prepare Dio options with headers
@@ -97,7 +77,7 @@ class ApiService extends BaseApiService {
 
 		// Make the API request
 		final response = await dio.post(
-			'$baseUrl/${ApiEndpoints.storeRetailer}',
+			'$baseUrl/${ApiEndpoints.storeEmployee}',
 			data: formData,
 			options: options,
 		);

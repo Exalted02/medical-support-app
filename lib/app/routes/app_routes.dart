@@ -15,6 +15,7 @@ abstract class Routes {
 	static const RESET_PASSWORD_SCREEN = _Paths.RESET_PASSWORD_SCREEN;
 	static const PROFILE_SCREEN = _Paths.PROFILE_SCREEN;
 	static const HOME = _Paths.HOME;
+	static const EMPLOYEE_HOME = _Paths.EMPLOYEE_HOME;
 	static const PRODUCTVIEW_SCREEN = _Paths.PRODUCTVIEW_SCREEN;
 	static const ORDER_DETAILS = _Paths.ORDER_DETAILS;
 	static const WISHLIST_DETAILS = _Paths.WISHLIST_DETAILS;
@@ -48,6 +49,7 @@ abstract class _Paths {
 	static const RESET_PASSWORD_SCREEN = '/reset-password-screen';
 	static const SERACH_SCREEN = '/serach-screen';
 	static const HOME = '/home';
+	static const EMPLOYEE_HOME = '/employee-home';
 	static const PRODUCTVIEW_SCREEN = '/product-view';
 	static const ORDER_DETAILS = '/order-details';
 	static const WISHLIST_DETAILS = '/wishlist-details';

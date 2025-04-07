@@ -24,7 +24,7 @@ class Appcontent {
   
   //onboarding
   static const String signUpClient = "Signup for Client";
-  static const String signUpEmployee = "Signup for Empolyee";
+  static const String signUpEmployee = "Signup for Employee";
   static const String login = "LOG IN";
   
   //SignUp CONSUMER

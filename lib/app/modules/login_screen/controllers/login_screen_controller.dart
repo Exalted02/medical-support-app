@@ -118,6 +118,7 @@ class LoginScreenController extends GetxController {
 		await prefs.setInt('genderId', userData['gender_id'] ?? 0);
 		await prefs.setInt('isProfileVerified', userData['profile_verified'] ?? 0);
 		await prefs.setString('profilePicture', userData['profile_image'] ?? '');
+		await prefs.setInt('userType', userData['user_type'] ?? 0);
 		
 		// Update UserController
 		final userController = Get.put(UserController());
@@ -129,6 +130,9 @@ class LoginScreenController extends GetxController {
 		final baseApiService = Get.find<BaseApiService>();
 		baseApiService.saveToken(token);
 
+		final prefs = await SharedPreferences.getInstance();
+		final userType = prefs.getInt('userType') ?? 0;
+	
 		SnackbarHelper.showSuccessSnackbar(
 			title: Appcontent.snackbarTitleSuccess, 
 			message: message,
@@ -141,7 +145,13 @@ class LoginScreenController extends GetxController {
 			  
 		await Future.delayed(Duration(seconds: 3));
 		//Get.offAll(Bottom());
-		Get.toNamed(Routes.HOME);
+		
+		//Get.toNamed(Routes.HOME);
+		if (userType == 1) {
+			Get.toNamed(Routes.EMPLOYEE_HOME); // define this in your app_pages.dart
+		} else {
+			Get.toNamed(Routes.HOME); // fallback
+		}
 	}
 
 }

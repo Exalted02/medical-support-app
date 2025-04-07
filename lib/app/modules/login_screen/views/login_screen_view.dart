@@ -306,7 +306,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
 							const SizedBox(height: 20),
 							
 							// Retailer Google Sign-In Button
-							OutlinedButton(
+							/*OutlinedButton(
 							  style: OutlinedButton.styleFrom(
 								fixedSize: Size(screenWidth, 56),
 								shape: RoundedRectangleBorder(
@@ -339,7 +339,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
 								  ),
 								],
 							  ),
-							),
+							),*/
 							
 						  ],
 						),

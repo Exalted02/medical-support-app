@@ -40,8 +40,7 @@ class ProfileScreenView extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    //'@ ${userController.name.value}',
-                    'James brook',
+                    '@ ${userController.name.value}',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -49,7 +48,8 @@ class ProfileScreenView extends StatelessWidget {
                   ),
 				  SizedBox(height: 8),
                   Text(
-                    'jamesl@domain.com | +01 234 567 89',
+                    //'jamesl@domain.com | +01 234 567 89',
+					'${userController.email.value} | ${userController.phoneNumber.value}',
                     style: TextStyle(
                       fontSize: 14,
                     ),

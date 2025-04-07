@@ -13,6 +13,8 @@ import '../modules/register/bindings/employee_register_binding.dart';
 import '../modules/register/views/employee_register_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/home/bindings/employee_home_binding.dart';
+import '../modules/home/views/employee_home_view.dart';
 import '../modules/chat/bindings/chat_binding.dart';
 import '../modules/chat/views/chat_view.dart';
 import '../modules/chat/views/chat_list.dart';
@@ -93,6 +95,12 @@ class AppPages {
       name: _Paths.HOME,
       page: () => HomeView(),
       binding: HomeBinding(),
+	  middlewares: [AuthGuard()], // After Login
+    ),
+    GetPage(
+      name: _Paths.EMPLOYEE_HOME,
+      page: () => EmployeeHomeView(),
+      binding: EmployeeHomeBinding(),
 	  middlewares: [AuthGuard()], // After Login
     ),
     GetPage(

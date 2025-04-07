@@ -124,22 +124,10 @@ class RegisterController extends GetxController {
 		//final selectedCountryItem = countryList.firstWhere((g) => g.id == countryId, orElse: () => Country(id: -1, name: 'Unknown'));
 		//selectedCountry.value = selectedCountryItem.id.toString();
 	}*/
-	Future<void> store_customer(first_name, last_name, email, password, confirmed_password, company_name, address, city, state, country, zipcode, phone_number) async {
+	Future<void> store_client(first_name, last_name, email, phone_number, fax, company_name, user_name, password, confirmed_password) async {
 		isLoading.value = true;
-		print('First Name: $first_name');
-		print('Last Name: $last_name');
-		print('Email: $email');
-		print('Password: $password');
-		print('Confirm Password: $confirmed_password');
-		print('Company Name: $company_name');
-		print('Address: $address');
-		print('City: $city');
-		print('State: $state');
-		print('Country: $country');
-		print('Zipcode: $zipcode');
-		print('Phone Number: $phone_number');
 		try {
-			final response = await apiService.store_customer(first_name, last_name, email, password, confirmed_password, company_name, address, city, state, country, zipcode, phone_number);
+			final response = await apiService.store_client(first_name, last_name, email, phone_number, fax, company_name, user_name, password, confirmed_password);
 			
 			//final otpErrorsEmail = response['errors']['email'] as List<dynamic>;
 			
@@ -213,33 +201,20 @@ class RegisterController extends GetxController {
 		}
 	}
   
-	Future<void> store_retailer({
+	Future<void> store_employee({
 		required String first_name, 
 		required String last_name, 
 		required String email, 
+		required String department, 
+		required String username, 
 		required String password, 
-		required String confirmed_password, 
-		required String company_name, 
-		required String address, 
-		required int city, 
-		required int state, 
-		required int country, 
-		required String zipcode, 
-		required String phone_number,
-		List<File>? selectedFiles,
+		required String confirmed_password,
 	}) async {
     isLoading.value = true;
-	//print('Navigating to CreatepinScreenView with name: $name');
-	//print('Navigating to CreatepinScreenView with email: $email');
-	//print('Navigating to CreatepinScreenView with password: $password');
     try {
-		if (selectedFiles != null && selectedFiles.isNotEmpty) {
-			File imageFile = selectedFiles.first; // Get the first (and only) file
-			final response = await apiService.store_retailer(imageFile, first_name:first_name, last_name:last_name, email:email, password:password, confirmed_password:confirmed_password, company_name:company_name, address:address, city:city, state:state, country:country, zipcode:zipcode, phone_number:phone_number);
-			
-			//final otpErrorsEmail = response['errors']['email'] as List<dynamic>;
+		//final response = await apiService.store_employee(first_name:first_name, last_name:last_name, email:email, department:department, username:username, password:password, confirmed_password:confirmed_password);
+		final response = await apiService.store_employee(first_name, last_name, email, department, username, password, confirmed_password);
 		
-		//print('testtttt: $otpErrorsEmail');
 		if (response['status'] == 200) {
 			SnackbarHelper.showSuccessSnackbar(
 			  title: Appcontent.snackbarTitleSuccess, 
@@ -298,10 +273,6 @@ class RegisterController extends GetxController {
 			  position: SnackPosition.BOTTOM, // Custom position
 			);
 		}
-	
-		}
-		
-		
     } catch (e) {
 		SnackbarHelper.showErrorSnackbar(
 		  title: Appcontent.snackbarTitleError, 

@@ -87,13 +87,13 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                           title: Text('Change Password'),
                         ),
                       ),
-                      PopupMenuItem<String>(
+                      /*PopupMenuItem<String>(
                         value: 'logout',
                         child: ListTile(
                           leading: Icon(Icons.exit_to_app, color: Colors.red),
                           title: Text('Logout'),
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                 ],

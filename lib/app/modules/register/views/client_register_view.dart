@@ -27,26 +27,30 @@ class ClientRegisterView extends GetView<RegisterController> {
   final TextEditingController firstnameController = TextEditingController();
   final TextEditingController lastnameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController faxController = TextEditingController();
+  final TextEditingController companynameController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController passwordconfirmationController = TextEditingController();
-  final TextEditingController companynameController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+  //final TextEditingController addressController = TextEditingController();
   //final TextEditingController cityController = TextEditingController();
-  final TextEditingController zipcodeController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
+  //final TextEditingController zipcodeController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final FocusNode _firstnameFocusNode = FocusNode();
   final FocusNode _lastnameFocusNode = FocusNode();
   final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _phoneFocusNode = FocusNode();
+  final FocusNode _faxFocusNode = FocusNode();
+  final FocusNode _companynameFocusNode = FocusNode();
+  final FocusNode _usernameFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
   final FocusNode _passwordconfirmationFocusNode = FocusNode();
-  final FocusNode _companynameFocusNode = FocusNode();
-  final FocusNode _addressFocusNode = FocusNode();
+  //final FocusNode _addressFocusNode = FocusNode();
   //final FocusNode _cityFocusNode = FocusNode();
-  final FocusNode _zipcodeFocusNode = FocusNode();
-  final FocusNode _phoneFocusNode = FocusNode();
+  //final FocusNode _zipcodeFocusNode = FocusNode();
   
   GoogleSignIn signIn = GoogleSignIn();
   void googleSignin(int flag) async {
@@ -138,22 +142,11 @@ class ClientRegisterView extends GetView<RegisterController> {
 										  return null;
 										},
 										onChanged: (value) {
-										  /*if (value.isNotEmpty) {
+										  if (value.isNotEmpty) {
 											_formKey.currentState?.validate();
-										  }*/
+										  }
 										},
 									  ),
-									  /*
-									  // Label Above the TextField
-									  Text(
-										Appcontent.lastName,
-										style: TextStyle(
-										  fontSize: 16,
-										  color: AppColor.formLabelColor, // Or any color you prefer
-										),
-									  ),
-									  const SizedBox(height: 8), // Space between label and text field
-									  */
 									  // Text Field
 									  autoWidthTextField(
 										text: Appcontent.placeholderLastName,
@@ -173,17 +166,6 @@ class ClientRegisterView extends GetView<RegisterController> {
 										  }
 										},
 									  ),
-									/*  
-									// Label Above the TextField
-									Text(
-										Appcontent.email,
-										style: TextStyle(
-											fontSize: 16,
-											color: AppColor.formLabelColor, // Or any color you prefer
-										),
-									),
-									const SizedBox(height: 8), // Space between label and text field
-									*/
 									autoWidthTextField(
 									  text: Appcontent.placeholderEmail,
 									  text1: 'Email Address',
@@ -215,7 +197,7 @@ class ClientRegisterView extends GetView<RegisterController> {
 										focusNode: _phoneFocusNode,
 										validator: (value) {
 										  if (value == null || value.isEmpty) {
-											return 'Phone number cannot be blank';
+											return 'Contact number cannot be blank';
 										  }
 										  return null;
 										},
@@ -230,11 +212,11 @@ class ClientRegisterView extends GetView<RegisterController> {
 										text: 'Enter Fax Number',
 										text1: 'Fax Number',
 										width: screenWidth,
-										controller: phoneController,
-										focusNode: _phoneFocusNode,
+										controller: faxController,
+										focusNode: _faxFocusNode,
 										validator: (value) {
 										  if (value == null || value.isEmpty) {
-											return 'Phone number cannot be blank';
+											return 'Fax number cannot be blank';
 										  }
 										  return null;
 										},
@@ -268,11 +250,11 @@ class ClientRegisterView extends GetView<RegisterController> {
 										text: 'Enter Username',
 										text1: 'Create Username',
 										width: screenWidth,
-										controller: companynameController,
-										focusNode: _companynameFocusNode,
+										controller: usernameController,
+										focusNode: _usernameFocusNode,
 										validator: (value) {
 										  if (value == null || value.isEmpty) {
-											return 'Company name cannot be blank';
+											return 'Username cannot be blank';
 										  }
 										  return null;
 										},
@@ -341,7 +323,7 @@ class ClientRegisterView extends GetView<RegisterController> {
 										focusNode: _passwordconfirmationFocusNode,
 										validator: (value) {
 										  if (value == null || value.isEmpty) {
-											return 'Password cannot be blank';
+											return 'Confirm password cannot be blank';
 										  }
 										  if (value.length < 8) {
 											return 'Password must be at least 8 characters';
@@ -374,23 +356,6 @@ class ClientRegisterView extends GetView<RegisterController> {
 							),
 						  const SizedBox(height: 20),
 						  Obx(() {
-								final selectedCountryValue = registerController.selectedCountry.value;
-								final selectedStateValue = registerController.selectedState.value;
-								final selectedCityValue = registerController.selectedCity.value;
-
-								// Handle potential parsing issues
-								final countryId = selectedCountryValue?.isNotEmpty ?? false
-								? int.tryParse(selectedCountryValue ?? '') // Handle null case
-								: null;
-
-								final stateId = selectedStateValue?.isNotEmpty ?? false
-								  ? int.tryParse(selectedStateValue ?? '')
-								  : null;
-								  
-								 final cityId = selectedCityValue?.isNotEmpty ?? false
-								  ? int.tryParse(selectedCityValue ?? '')
-								  : null;
-								  
 								return autoWidthBtn(
 								  text: registerController.isLoading.value ? 'Sign Up...' : 'Sign Up',
 								  width: screenWidth,
@@ -401,27 +366,26 @@ class ClientRegisterView extends GetView<RegisterController> {
 											final firstname = firstnameController.text.trim();
 											final lastname = lastnameController.text.trim();
 											final email = emailController.text.trim();
+											final phone = phoneController.text.trim();
+											final fax = faxController.text.trim();
+											final companyname = companynameController.text.trim();
+											final username = usernameController.text.trim();
 											final password = passwordController.text.trim();
 											final passwordconfirmation = passwordconfirmationController.text.trim();
-											final companyname = companynameController.text.trim();
-											final address = addressController.text.trim();
+											//final address = addressController.text.trim();
 											//final city = cityController.text.trim();
-											final zipcode = zipcodeController.text.trim();
-											final phone = phoneController.text.trim();
+											//final zipcode = zipcodeController.text.trim();
 															  
-											registerController.store_customer(
+											registerController.store_client(
 											  firstname,
 											  lastname,
 											  email,
+											  phone,
+											  fax,
+											  companyname,
+											  username,
 											  password,
 											  passwordconfirmation,
-											  companyname,
-											  address,
-											  cityId,
-											  stateId,
-											  countryId,
-											  zipcode,
-											  phone,
 											);
 										  }
 										},
@@ -501,7 +465,7 @@ class ClientRegisterView extends GetView<RegisterController> {
 									const SizedBox(height: 20),
 									
 									// Retailer Google Sign-In Button
-									OutlinedButton(
+									/*OutlinedButton(
 									  style: OutlinedButton.styleFrom(
 										fixedSize: Size(screenWidth, 56),
 										shape: RoundedRectangleBorder(
@@ -534,7 +498,7 @@ class ClientRegisterView extends GetView<RegisterController> {
 										  ),
 										],
 									  ),
-									),
+									),*/
 									
 								  ],
 								),

@@ -8,8 +8,8 @@ class ApiEndpoints {
 	static const String forgotPassword = 'forgot-password';
 	static const String forgotPassword_verifyOtp = 'forgot-password-verify-otp';
 	static const String resetPassword = 'reset-password';
-	static const String storeCustomer = 'store-customer';
-	static const String storeRetailer = 'store-retailer';
+	static const String storeClient = 'store-client';
+	static const String storeEmployee = 'store-employee';
 	static const String register_verifyOtp = 'register-verify-otp';
 	static const String homeCategoryList = 'home-category-list';
 	static const String homeArtistList = 'home-artist-list';
