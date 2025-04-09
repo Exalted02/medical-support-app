@@ -63,15 +63,20 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  Future<String?> _getToken() async {
-    try {
-      final baseApiService = Get.find<BaseApiService>();
-      return await baseApiService.getToken();
-    } catch (e) {
-      print("Error fetching token: $e");
-      return null; // Handle the error gracefully
-    }
-  }
+	Future<Map<String, dynamic>> _getTokenAndUserType() async {
+	  try {
+		final baseApiService = Get.find<BaseApiService>();
+		final token = await baseApiService.getToken();
+
+		final prefs = await SharedPreferences.getInstance();
+		final userType = prefs.getInt('userType') ?? 0;
+
+		return {'token': token, 'userType': userType};
+	  } catch (e) {
+		print("Error fetching token/userType: $e");
+		return {'token': null, 'userType': 0};
+	  }
+	}
 
   @override
   Widget build(BuildContext context) {
@@ -86,31 +91,31 @@ class MyApp extends StatelessWidget {
       ),
       getPages: AppPages.routes,
       debugShowCheckedModeBanner: false,
-      home: FutureBuilder<String?>(
-        future: _getToken(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return _buildSplashScreen();
-          } else if (snapshot.hasData && snapshot.data != null) {
-            // Token exists, navigate to Bottom screen
-            WidgetsBinding.instance?.addPostFrameCallback((_) {
-              //Get.offAll(Bottom());
-				Get.toNamed(Routes.HOME);
-              // Load home data after navigation and login verification
-				//final homeController = Get.find<HomeController>();
-				//homeController.loadInitialDataForCategory();  // Load data for user
-				//homeController.loadInitialDataForArtist();
-            });
-            return _buildSplashScreen();
-          } else {
-            // No token, navigate to INITIAL page
-            WidgetsBinding.instance?.addPostFrameCallback((_) {
-              Get.offAllNamed(AppPages.INITIAL);
-            });
-            return _buildSplashScreen();
-          }
-        },
-      ),
+      home: FutureBuilder<Map<String, dynamic>>(
+		  future: _getTokenAndUserType(),
+		  builder: (context, snapshot) {
+			if (snapshot.connectionState == ConnectionState.waiting) {
+			  return _buildSplashScreen();
+			} else if (snapshot.hasData && snapshot.data?['token'] != null) {
+			  final userType = snapshot.data?['userType'] ?? 0;
+
+			  WidgetsBinding.instance.addPostFrameCallback((_) {
+				if (userType == 1) {
+				  Get.toNamed(Routes.EMPLOYEE_HOME);
+				} else {
+				  Get.toNamed(Routes.HOME);
+				}
+			  });
+
+			  return _buildSplashScreen();
+			} else {
+			  WidgetsBinding.instance.addPostFrameCallback((_) {
+				Get.offAllNamed(AppPages.INITIAL);
+			  });
+			  return _buildSplashScreen();
+			}
+		  },
+	  ),
     );
   }
 

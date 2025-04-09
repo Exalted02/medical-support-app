@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:medicalsupport/services/api_service.dart';
 import 'package:medicalsupport/app/modules/home/controllers/home_controller.dart';
+import 'package:medicalsupport/app/modules/chat/controllers/chat_controller.dart';
 
 class HomeBinding extends Bindings {
   @override
@@ -10,5 +11,8 @@ class HomeBinding extends Bindings {
 
     // Lazy put for HomeController, ensure ApiService is already available
     Get.lazyPut<HomeController>(() => HomeController(Get.find<ApiService>()));
+	
+    // Lazy put for ChatController, ensure ApiService is already available
+    Get.lazyPut<ChatController>(() => ChatController(Get.find<ApiService>()));
   }
 }

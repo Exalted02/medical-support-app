@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:medicalsupport/config/common_bottom_navigation_bar.dart';
 import 'package:medicalsupport/config/common_bottom_navigation_floating_button.dart';
 import 'package:medicalsupport/config/app_color.dart';
@@ -9,6 +10,25 @@ class ChatView extends StatefulWidget {
 }
 
 class _ChatViewState extends State<ChatView> {
+  late int reasonId;
+  late String reasonText;
+  late String uniqueChatId;
+
+  bool isFirstMessage = true;
+
+  @override
+  void initState() {
+    super.initState();
+    final args = Get.arguments;
+    reasonId = args['reason_id'];
+    reasonText = args['reason_text'];
+    uniqueChatId = args['unique_chat_id'];
+	
+	print('reasonId is: $reasonId');
+	print('reasonText is: $reasonText');
+	print('uniqueChatId is: $uniqueChatId');
+  }
+  
   String selectedEmployee = "John Doe"; // Default employee
   String chatStatus = "Open"; // Default chat status
   bool isRead = false; // Chat read/unread state
@@ -39,14 +59,14 @@ class _ChatViewState extends State<ChatView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Kiran Patel", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                      Row(
+                      Text("$reasonText", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      /*Row(
                         children: [
                           Icon(Icons.circle, size: 10, color: Colors.green),
                           SizedBox(width: 5),
                           Text("Always active", style: TextStyle(color: Colors.grey, fontSize: 12)),
                         ],
-                      ),
+                      ),*/
                     ],
                   ),
                 ),

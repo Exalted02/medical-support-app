@@ -54,7 +54,6 @@ class LoginScreenController extends GetxController {
 	
 	Future<void> login(String username, String password) async {
 	  isLoading.value = true;
-	  //Get.toNamed(Routes.HOME);
 	  final response = await apiService.login(username, password);
 	  isLoading.value = false;
 

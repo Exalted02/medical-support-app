@@ -4,12 +4,17 @@ import 'package:medicalsupport/config/app_color.dart';
 import 'package:medicalsupport/app/routes/app_pages.dart';
 import 'package:medicalsupport/services/api_service.dart';
 import 'package:medicalsupport/app/modules/activity_screen/activity_screen_controller.dart';
+import 'package:medicalsupport/app/modules/profile_screen/controllers/user_controller.dart';
 
 class CommonDrawer extends StatelessWidget {
   final ActivityScreenController controller = Get.put(ActivityScreenController(Get.find<ApiService>()));
-
+  
+  final userController = Get.find<UserController>();
+  
   @override
   Widget build(BuildContext context) {
+	//final int userType = userController.userType.value;
+	
     return Drawer(
       child: Column(
         children: [
@@ -35,11 +40,11 @@ class CommonDrawer extends StatelessWidget {
                 const SizedBox(height: 10),
                 // User Name
                 Text(
-                  "Kiran Patel",
+                  '@ ${userController.name.value}',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
                 // User Designation
-                Text("Designation", style: TextStyle(fontSize: 14, color: Colors.grey)),
+                Text('${userController.email.value}', style: TextStyle(fontSize: 14, color: Colors.grey)),
               ],
             ),
           ),
@@ -51,7 +56,7 @@ class CommonDrawer extends StatelessWidget {
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: [
-                  _buildDrawerItem(Icons.dashboard, "Dashboard", Routes.HOME, context),
+                  _buildDrawerItem(Icons.dashboard, "Dashboard", userController.userType.value == 1 ? Routes.EMPLOYEE_HOME : Routes.HOME, context),
                   _buildDrawerItem(Icons.message, "Chat", Routes.CHAT_LIST, context),
                   ListTile(
                     leading: Icon(Icons.logout, color: Colors.red),

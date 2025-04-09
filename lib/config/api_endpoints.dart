@@ -11,6 +11,8 @@ class ApiEndpoints {
 	static const String storeClient = 'store-client';
 	static const String storeEmployee = 'store-employee';
 	static const String register_verifyOtp = 'register-verify-otp';
+	static const String reasonList = 'chat-reasons';
+	static const String chatList = 'chats-list';
 	static const String homeCategoryList = 'home-category-list';
 	static const String homeArtistList = 'home-artist-list';
 	static const String allCategoryList = 'category-list';

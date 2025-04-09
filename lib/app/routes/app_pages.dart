@@ -18,6 +18,7 @@ import '../modules/home/views/employee_home_view.dart';
 import '../modules/chat/bindings/chat_binding.dart';
 import '../modules/chat/views/chat_view.dart';
 import '../modules/chat/views/chat_list.dart';
+import '../modules/chat/views/start_new_chat.dart';
 
 import '../modules/forgot_screen/views/forgot_screen_view.dart';
 import '../modules/otp_verification_screen/views/otp_verification_screen_view.dart';
@@ -118,6 +119,12 @@ class AppPages {
     GetPage(
       name: _Paths.CHAT,
       page: () => ChatView(),
+      binding: ChatBinding(),
+	  middlewares: [AuthGuard()], // After Login
+    ),
+    GetPage(
+      name: _Paths.START_NEW_CHAT,
+      page: () => StartNewChat(),
       binding: ChatBinding(),
 	  middlewares: [AuthGuard()], // After Login
     ),

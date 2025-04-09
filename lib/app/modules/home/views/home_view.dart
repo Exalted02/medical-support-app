@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:medicalsupport/app/routes/app_pages.dart';
 import 'package:medicalsupport/config/common_bottom_navigation_bar.dart';
 import 'package:medicalsupport/config/common_bottom_navigation_floating_button.dart';
 import 'package:medicalsupport/config/common_drawer.dart';
 import 'package:medicalsupport/config/common_app_bar.dart'; // Import Common AppBar
 import 'package:fl_chart/fl_chart.dart';
+
+import 'package:medicalsupport/app/modules/chat/controllers/chat_controller.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -11,6 +15,14 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+	final ChatController chatController = Get.find<ChatController>();
+  
+	@override
+	void initState() {
+		super.initState();
+		chatController.chatListData();
+	}
+	
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,15 +34,10 @@ class _HomeViewState extends State<HomeView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildDashboardCards(),
+            _buildNewChatBtn(),
             SizedBox(height: 10),
-            _buildAnalyticsCard(),
+			Obx(() => _buildDashboardCards()),
             SizedBox(height: 10),
-            _buildInfoCards(),
-            SizedBox(height: 10),
-            _buildEmployeesCalendar(),
-            SizedBox(height: 10),
-            _buildOngoingTickets(),
           ],
         ),
       ),
@@ -40,233 +47,114 @@ class _HomeViewState extends State<HomeView> {
     );
   }
   
+  Widget _buildNewChatBtn() {
+	  return SizedBox(
+		width: double.infinity,
+		child: ElevatedButton.icon(
+		  onPressed: () {
+			// Navigate to the new chat page using named route
+			Navigator.pop(context); // Optional: close drawer if needed
+			Get.toNamed(Routes.START_NEW_CHAT); // Replace with your actual route
+		  },
+		  icon: Icon(Icons.add_comment),
+		  label: Text("Start New Chat"),
+		  style: ElevatedButton.styleFrom(
+			backgroundColor: Colors.purple,
+			foregroundColor: Colors.white,
+			padding: EdgeInsets.symmetric(vertical: 14),
+			textStyle: TextStyle(fontSize: 16),
+			shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+		  ),
+		),
+	  );
+  }
+
   // 🔹 Dashboard Cards (Ongoing & Solved Queries)
   Widget _buildDashboardCards() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _buildCard("Ongoing Queries", "125", Icons.pending, Colors.purple),
-        _buildCard("Solved Queries", "218", Icons.check_circle, Colors.blue),
-      ],
-    );
+	  return Column(
+		children: chatController.chatData.map((item) {
+		  return Padding(
+			padding: const EdgeInsets.symmetric(vertical: 6),
+			child: _buildCard(
+			  item['ticket_number'] ?? '',
+			  item['resident'] ?? '',
+			  item['timestamp'] ?? '',
+			  item['issue'] ?? '',
+			  item['assigned_to'] ?? '',
+			),
+		  );
+		}).toList(),
+	  );
   }
 
-  Widget _buildCard(String title, String count, IconData icon, Color color) {
-    return Expanded(
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5),
-        padding: EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: TextStyle(color: Colors.grey, fontSize: 14)),
-            SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(count, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                Icon(icon, color: color, size: 30),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
-  // 🔹 Analytics Card
-  Widget _buildAnalyticsCard() {
+  Widget _buildCard(String ticket_number, String resident, String timestamp, String issue, String assigned_to) {
     return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Tickets Analytics", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          SizedBox(height: 10),
-          SizedBox(
-			height: 200,
-			child: LineChart(
-			  LineChartData(
-				gridData: FlGridData(show: false),
-				borderData: FlBorderData(
-				  border: Border.all(color: Colors.grey.shade300),
+		//width: MediaQuery.of(context).size.width * 0.45,
+		padding: EdgeInsets.all(16),
+		decoration: BoxDecoration(
+		  color: Colors.white,
+		  borderRadius: BorderRadius.circular(10),
+		  boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
+		),
+		child: Column(
+		  crossAxisAlignment: CrossAxisAlignment.start,
+		  children: [
+			Row(
+			  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+			  children: [
+				Text(
+				  'Ticket #${ticket_number}',
+				  style: TextStyle(fontWeight: FontWeight.bold),
 				),
-				titlesData: FlTitlesData(
-				  leftTitles: AxisTitles(
-					sideTitles: SideTitles(
-					  showTitles: true,
-					  reservedSize: 40,
-					  getTitlesWidget: (double value, TitleMeta meta) {
-						return Text(value.toInt().toString(), style: TextStyle(fontSize: 12));
-					  },
-					),
+				Container(
+				  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+				  decoration: BoxDecoration(
+					color: Colors.green[100],
+					borderRadius: BorderRadius.circular(4),
 				  ),
-				  bottomTitles: AxisTitles(
-					sideTitles: SideTitles(
-					  showTitles: true,
-					  getTitlesWidget: (double value, TitleMeta meta) {
-						switch (value.toInt()) {
-						  case 0:
-							return Text('Jan');
-						  case 1:
-							return Text('Feb');
-						  case 2:
-							return Text('Mar');
-						  case 3:
-							return Text('Apr');
-						  case 4:
-							return Text('May');
-						  case 5:
-							return Text('Jun');
-						  default:
-							return Text('');
-						}
-					  },
+				  child: Text(
+					'Active ticket',
+					style: TextStyle(
+					  color: Colors.green[800],
+					  fontSize: 12,
+					  fontWeight: FontWeight.w500,
 					),
 				  ),
 				),
-				lineBarsData: [
-				  LineChartBarData(
-					spots: [
-					  FlSpot(0, 12), // January
-					  FlSpot(1, 18), // February
-					  FlSpot(2, 10), // March
-					  FlSpot(3, 24), // April
-					  FlSpot(4, 16), // May
-					  FlSpot(5, 20), // June
-					],
-					isCurved: true,
-					color: Colors.blue,
-					barWidth: 3,
-					isStrokeCapRound: true,
-					belowBarData: BarAreaData(show: true, color: Colors.blue.withOpacity(0.3)),
-				  ),
-				  LineChartBarData(
-					spots: [
-					  FlSpot(0, 30), // January
-					  FlSpot(1, 12), // February
-					  FlSpot(2, 20), // March
-					  FlSpot(3, 18), // April
-					  FlSpot(4, 40), // May
-					  FlSpot(5, 10), // June
-					],
-					isCurved: true,
-					color: Colors.purple,
-					barWidth: 3,
-					isStrokeCapRound: true,
-					belowBarData: BarAreaData(show: true, color: Colors.blue.withOpacity(0.3)),
-				  ),
-				],
+			  ],
+			),
+			SizedBox(height: 10),
+			_buildDetailRow('Resident:', resident),
+			_buildDetailRow('Timestamp:', timestamp),
+			_buildDetailRow('Issue :', issue),
+			_buildDetailRow('Assigned to :', assigned_to),
+		  ],
+		),
+	);
+  }
+  
+  Widget _buildDetailRow(String label, String value) {
+	  return Padding(
+		padding: const EdgeInsets.symmetric(vertical: 2),
+		child: Row(
+		  crossAxisAlignment: CrossAxisAlignment.start,
+		  children: [
+			Text(
+			  '$label ',
+			  style: TextStyle(color: Colors.black87),
+			),
+			Expanded(
+			  child: Text(
+				value,
+				style: TextStyle(
+				  fontWeight: FontWeight.bold,
+				  color: Colors.black87,
+				),
 			  ),
 			),
-		  ),
-        ],
-      ),
-    );
-  }
-
-  // 🔹 Info Cards (Support Provided & Business Growth)
-  Widget _buildInfoCards() {
-    return Column(
-      children: [
-        _buildInfoCard("Support Provided", "36.80%", "+ 25% High from last month", Colors.green),
-        _buildInfoCard("Business Growth", "20.80%", "- 30% Low from last month", Colors.red),
-      ],
-    );
-  }
-
-  Widget _buildInfoCard(String title, String value, String change, Color changeColor) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 10),
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: TextStyle(fontSize: 14, color: Colors.grey)),
-              SizedBox(height: 4),
-              Text(value, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ],
-          ),
-          Text(change, style: TextStyle(color: changeColor, fontWeight: FontWeight.bold)),
-        ],
-      ),
-    );
-  }
-
-  // 🔹 Employees Calendar
-  Widget _buildEmployeesCalendar() {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text("Employees Calendar", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          Icon(Icons.calendar_today, color: Colors.grey),
-        ],
-      ),
-    );
-  }
-
-  // 🔹 Ongoing Tickets Section
-  Widget _buildOngoingTickets() {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Ongoing Tickets Details", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          SizedBox(height: 10),
-          _buildTicketDetail("Jens Brincker", "27/05/2016", "Lorem ipsum dummy text...", "SOLVED"),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTicketDetail(String name, String date, String query, String status) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Name: $name", style: TextStyle(fontWeight: FontWeight.bold)),
-        Text("Date: $date"),
-        Text("Query: $query"),
-        Row(
-          children: [
-            Chip(label: Text(status), backgroundColor: Colors.green),
-            Spacer(),
-            Icon(Icons.edit, color: Colors.blue),
-            SizedBox(width: 10),
-            Icon(Icons.delete, color: Colors.red),
-          ],
-        ),
-      ],
-    );
+		  ],
+		),
+	  );
   }
 }

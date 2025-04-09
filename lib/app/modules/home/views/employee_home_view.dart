@@ -91,7 +91,7 @@ class _EmployeeHomeViewState extends State<EmployeeHomeView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Tickets Analytics Employee", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          Text("Tickets Analytics", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           SizedBox(height: 10),
           SizedBox(
 			height: 200,

@@ -8,21 +8,24 @@ import 'package:medicalsupport/app/modules/profile_screen/controllers/user_contr
 class CommonBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
   final userController = Get.find<UserController>();
-
+  
   //CommonBottomNavigationBar({required this.currentIndex});
   CommonBottomNavigationBar({required this.currentIndex}) {
     //print('CurrentIndex: $currentIndex');
   }
   void _onBottomNavTap(int index) {
+	final userTypeVal = userController.userType.value ?? 0;
+	final homeRoute = userTypeVal == 1 ? Routes.EMPLOYEE_HOME : Routes.HOME;
+
     switch (index) {
       case 0:
-        Get.toNamed(Routes.HOME);
+        Get.toNamed(homeRoute);
         break;
       case 1:
-        Get.toNamed(Routes.HOME);
+        Get.toNamed(homeRoute);
         break;
       case 2:
-        Get.toNamed(Routes.HOME);
+        Get.toNamed(homeRoute);
         break;
       case 3:
         Get.toNamed(Routes.CHAT_LIST);

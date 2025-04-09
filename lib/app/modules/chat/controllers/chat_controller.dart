@@ -11,10 +11,34 @@ class ChatController extends GetxController {
 	//TODO: Implement ChatController
 	final ApiService apiService;
 	var isLoading = false.obs;  // RxBool
+	var reasonData = <dynamic>[].obs;	
+	var chatData = <dynamic>[].obs;	
+	
 	ChatController(this.apiService);
 	
 	@override
 	void onInit() {
 		
 	}
+	
+	// Home page category data
+	Future<void> reasonListData() async {
+		try {
+			var response = await apiService.reasonList();
+			var newFeedData = response['data']; 
+			reasonData.assignAll(newFeedData);
+		} catch (e) {
+			print('Error fetching All reasonData - chat controller: $e');
+		}
+	}
+	// Home page category data
+	Future<void> chatListData() async {
+		try {
+			var response = await apiService.chatList();
+			var newFeedData = response['data']; 
+			chatData.assignAll(newFeedData);
+		} catch (e) {
+			print('Error fetching All chatData - chat controller: $e');
+		}
+	}	
 }
