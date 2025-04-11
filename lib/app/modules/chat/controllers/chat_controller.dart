@@ -41,4 +41,16 @@ class ChatController extends GetxController {
 			print('Error fetching All chatData - chat controller: $e');
 		}
 	}	
+	// Home page category data
+	Future<Map<String, dynamic>> chatMessageData(String chatGroupId) async {
+		try {
+			var response = await apiService.chatMessageData(chatGroupId);
+			return response;
+			//var newFeedData = response['data']; 
+			//chatData.assignAll(newFeedData);
+		} catch (e) {
+			print('Error fetching All chatData - chat controller: $e');
+			return {};
+		}
+	}	
 }

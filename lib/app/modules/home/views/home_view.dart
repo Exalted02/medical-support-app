@@ -8,6 +8,7 @@ import 'package:medicalsupport/config/common_app_bar.dart'; // Import Common App
 import 'package:fl_chart/fl_chart.dart';
 
 import 'package:medicalsupport/app/modules/chat/controllers/chat_controller.dart';
+import 'package:medicalsupport/app/modules/profile_screen/controllers/user_controller.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
 	final ChatController chatController = Get.find<ChatController>();
+	final userController = Get.find<UserController>();
   
 	@override
 	void initState() {
@@ -71,6 +73,38 @@ class _HomeViewState extends State<HomeView> {
 
   // 🔹 Dashboard Cards (Ongoing & Solved Queries)
   Widget _buildDashboardCards() {
+	final userIdVal = userController.userId.value ?? 0;
+	
+	  return Column(
+		children: chatController.chatData.map((item) {
+		  return Padding(
+			padding: const EdgeInsets.symmetric(vertical: 6),
+			child: InkWell(
+			  onTap: () {
+				Get.toNamed(Routes.CHAT, arguments: {
+					'reason_id': int.tryParse(item['reason_id'].toString()) ?? 0,
+					'reason_text': item['issue'],
+					'unique_chat_id': item['unique_chat_id'],
+					'receiver_id': item['receiver_id'],
+					'chat_group_id': item['chat_group_id'],
+					'my_id': userIdVal,
+				});
+			  },
+			  borderRadius: BorderRadius.circular(12), // Match card shape if needed
+			  child: _buildCard(
+				item['ticket_number'] ?? '',
+				item['resident'] ?? '',
+				item['timestamp'] ?? '',
+				item['issue'] ?? '',
+				item['assigned_to'] ?? '',
+			  ),
+			),
+		  );
+		}).toList(),
+	  );
+	}
+
+  /*Widget _buildDashboardCards() {
 	  return Column(
 		children: chatController.chatData.map((item) {
 		  return Padding(
@@ -85,7 +119,7 @@ class _HomeViewState extends State<HomeView> {
 		  );
 		}).toList(),
 	  );
-  }
+  }*/
 
 
   Widget _buildCard(String ticket_number, String resident, String timestamp, String issue, String assigned_to) {

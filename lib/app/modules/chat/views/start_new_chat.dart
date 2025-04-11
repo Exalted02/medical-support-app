@@ -68,17 +68,16 @@ class _StartNewChatState extends State<StartNewChat> {
 	  required Map<String, dynamic> data,
 	}) {
 	  final userIdVal = userController.userId.value ?? 0;
-	  int timestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-	  final String uniqueId = '${userIdVal}$timestamp';
+	  //int timestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+	  //final String uniqueId = '${userIdVal}$timestamp';
 	  
 	  return GestureDetector(
 		onTap: () {
-		  //context.push('/chat-reason-details', extra: title); // or pass ID if needed
-		  //Get.toNamed(Routes.CHAT);
 		  Get.toNamed(Routes.CHAT, arguments: {
 			'reason_id': data['id'],
 			'reason_text': data['reason'],
-			'unique_chat_id': uniqueId,
+			//'unique_chat_id': uniqueId,
+			'my_id': userIdVal,
 		  });
 		},
 		child: Container(

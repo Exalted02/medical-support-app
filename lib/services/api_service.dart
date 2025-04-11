@@ -89,6 +89,30 @@ class ApiService extends BaseApiService {
 		return response.data != null ? response.data : {'success': false};
 	}
 	
+	//Send message
+	Future<Map<String, dynamic>> sendReasonMessage({
+	  required String message,
+	  required String? receiverId,
+	  required String? editId,
+	  required String? departmentId,
+	  required int? reasonId,
+	  required String? uniqueChatId,
+	}) async {
+	  final payload = {
+		'message': message,
+		'receiver_id': receiverId ?? '',
+		'edit_id': editId ?? '',
+		'department_id': departmentId ?? '', // Send empty if null
+		'reason_id': reasonId ?? 0, // Send empty if null
+		'unique_chat_id': uniqueChatId ?? '', // Send empty if null
+	  };
+
+	  final response = await post(ApiEndpoints.sendReasonMessage, payload, requiresAuth: true);
+	  //print('AAAAAAAAAAAAAAAAA : $response');
+	  return response;
+	}
+
+	
 	//Register email Verify OTP page
 	Future<Map<String, dynamic>> register_verifyOtp(String email, String otp) async {
 		final response = await post(ApiEndpoints.register_verifyOtp, {'email': email, 'otp': otp}, requiresAuth: true);
@@ -106,6 +130,11 @@ class ApiService extends BaseApiService {
 	//Home page category list
 	Future<Map<String, dynamic>> chatList() {
 		return get(ApiEndpoints.chatList, requiresAuth: true);
+	}
+	//Home page category list
+	Future<Map<String, dynamic>> chatMessageData(chatGroupId) async {
+		final response = await post(ApiEndpoints.chatMessageData, {'chat_group_id': chatGroupId}, requiresAuth: true);
+		return response;
 	}
 	//Home page artist list
 	Future<Map<String, dynamic>> homeArtistList() {
