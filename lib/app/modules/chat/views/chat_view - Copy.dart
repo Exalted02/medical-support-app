@@ -52,7 +52,7 @@ class _ChatViewState extends State<ChatView> {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundImage: AssetImage('assets/images/user_avatar.png'),
+                  backgroundImage: AssetImage('assets/default-logo.png'),
                 ),
                 SizedBox(width: 10),
                 Expanded(

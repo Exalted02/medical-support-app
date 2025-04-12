@@ -136,6 +136,16 @@ class ApiService extends BaseApiService {
 		final response = await post(ApiEndpoints.chatMessageData, {'chat_group_id': chatGroupId}, requiresAuth: true);
 		return response;
 	}
+	//Home page category list
+	Future<Map<String, dynamic>> updateMessage(String messageId, String newText) async {
+		final response = await post(ApiEndpoints.updateMessage, {'message_id': messageId, 'message': newText}, requiresAuth: true);
+		return response;
+	}
+	//Home page category list
+	Future<Map<String, dynamic>> deleteMessage(String messageId) async {
+		final response = await post(ApiEndpoints.deleteMessage, {'message_id': messageId}, requiresAuth: true);
+		return response;
+	}
 	//Home page artist list
 	Future<Map<String, dynamic>> homeArtistList() {
 		return get(ApiEndpoints.homeArtistList, requiresAuth: false);

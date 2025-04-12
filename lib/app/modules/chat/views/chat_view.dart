@@ -7,6 +7,7 @@ import 'package:medicalsupport/config/common_bottom_navigation_floating_button.d
 import 'package:medicalsupport/config/app_color.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import 'package:medicalsupport/services/api_service.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:medicalsupport/app/modules/chat/controllers/chat_controller.dart';
 
@@ -78,9 +79,10 @@ class _ChatViewState extends State<ChatView> {
 		setState(() {
 		  _messages = messagesData.map<Map<String, dynamic>>((msg) {
 			return {
+			  'message_id': msg['id'],
 			  'text': msg['message'],
 			  'isSentByMe': msg['sender_id'].toString() == myId.toString(),
-			  'created_at': msg['created_at'],
+			  'createdAt': msg['created_at'],
 			};
 		  }).toList();
 		});
@@ -111,9 +113,10 @@ class _ChatViewState extends State<ChatView> {
       //if (data['unique_chat_id'].toString() == uniqueChatId.toString()) {
         setState(() {
           _messages.add({
+		    'message_id': data['id'],
             'text': data['message'],
             'isSentByMe': data['sender_id'].toString() == myId.toString(),
-            'created_at': data['created_at'],
+            'createdAt': data['created_at_original'],
           });
 		  // Save receiver_id and chat_group_id for future messages
 		  if(chatGroupId == '' || chatGroupId == null){
@@ -147,7 +150,7 @@ class _ChatViewState extends State<ChatView> {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundImage: AssetImage('assets/images/user_avatar.png'),
+                  backgroundImage: AssetImage('assets/default-logo.png'),
                 ),
                 SizedBox(width: 10),
                 Expanded(
@@ -155,13 +158,13 @@ class _ChatViewState extends State<ChatView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("$reasonText", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                      Row(
+                      /*Row(
                         children: [
                           Icon(Icons.circle, size: 10, color: Colors.green),
                           SizedBox(width: 5),
                           Text("$uniqueChatId", style: TextStyle(color: Colors.grey, fontSize: 12)),
                         ],
-                      ),
+                      ),*/
                     ],
                   ),
                 ),
@@ -187,15 +190,30 @@ class _ChatViewState extends State<ChatView> {
             ),
           ),
           Divider(),
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.all(16.0),
-              children: _messages.map((msg) => ChatBubble(
-                message: msg['text'],
-                isSentByMe: msg['isSentByMe'],
-              )).toList(),
-            ),
-          ),
+		  Expanded(
+			  child: ListView(
+				padding: EdgeInsets.all(16.0),
+				children: _messages.map((msg) {
+				  if (msg['isSentByMe']) {
+					return GestureDetector(
+					  onLongPress: () => _showMessageOptions(msg),
+					  child: ChatBubble(
+						message: msg['text'],
+						isSentByMe: msg['isSentByMe'],
+						createdAt: msg['createdAt'],
+					  ),
+					);
+				  } else {
+					return ChatBubble(
+					  message: msg['text'],
+					  isSentByMe: msg['isSentByMe'],
+					  createdAt: msg['createdAt'],
+					);
+				  }
+				}).toList(),
+			  ),
+		  ),
+
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -240,38 +258,81 @@ class _ChatViewState extends State<ChatView> {
       bottomNavigationBar: CommonBottomNavigationBar(currentIndex: 3),
     );
   }
+  void _showMessageOptions(Map<String, dynamic> msg) {
+	  showModalBottomSheet(
+		context: context,
+		builder: (context) {
+		  return Wrap(
+			children: [
+			  ListTile(
+				leading: Icon(Icons.edit),
+				title: Text('Edit'),
+				onTap: () {
+				  Navigator.pop(context);
+				  _editMessage(msg);
+				},
+			  ),
+			  ListTile(
+				leading: Icon(Icons.delete),
+				title: Text('Delete'),
+				onTap: () {
+				  Navigator.pop(context);
+				  _deleteMessage(msg);
+				},
+			  ),
+			],
+		  );
+		},
+	  );
+  }
+  void _editMessage(Map<String, dynamic> msg) {
+	  setState(() {
+		_messageController.text = msg['text'];
+		editId = msg['message_id'].toString(); // Set editId to send later
+	  });
+  }
+  void _deleteMessage(Map<String, dynamic> msg) async {
+	  final res = await apiService.deleteMessage(msg['message_id'].toString());
+	  if (res['success']) {
+		setState(() {
+		  _messages.removeWhere((m) => m['message_id'].toString() == msg['message_id'].toString());
+		});
+	  }
+  }
+
+
+	
+
   void _sendMessageToApi(String messageText) async {
 	  if (messageText.trim().isEmpty) return;
 	  
-	  try {
-		// Show loading or temporary local message if needed
-		//setState(() => _isSending = true);
+	  try {	  
 		_isSending.value = true;
 
-		final response = await apiService.sendReasonMessage(
-		  message: messageText,
-		  receiverId: receiverId?.toString(), // Set your actual receiver ID here
-		  editId: editId?.toString(),
-		  departmentId: departmentId?.toString(),
-		  reasonId: reasonId,
-		  uniqueChatId: uniqueChatId?.toString(),
-		);
-
-		/*if (response['success'] == true && response['message'] != null) {
-		  final messageData = response['message'];
-
-		  // Save receiver_id and chat_group_id for future messages
-		  setState(() {
-			receiverId = messageData['receiver_id'].toString();
-			chatGroupId = messageData['chat_group_id'].toString();
-			_messages.add(messageData); // Update chat list with new message
-		  });
-
-		  // Optionally clear input
-		  //_textController.clear();
+		if (editId != null) {
+		  final res = await apiService.updateMessage(editId!, messageText);
+		  if (res['success']) {
+			setState(() {
+			  final index = _messages.indexWhere((m) => m['message_id'].toString() == editId.toString());
+			  if (index != -1) {
+				_messages[index] = {
+				  ..._messages[index],
+				  'text': messageText,
+				};
+			  }
+			  editId = null;
+			});
+		  }
 		} else {
-		  print('Failed to send message: ${response['error']}');
-		}*/
+			final response = await apiService.sendReasonMessage(
+			  message: messageText,
+			  receiverId: receiverId?.toString(), // Set your actual receiver ID here
+			  editId: editId?.toString(),
+			  departmentId: departmentId?.toString(),
+			  reasonId: reasonId,
+			  uniqueChatId: uniqueChatId?.toString(),
+			);
+		}	
 	  } catch (e) {
 		print('Error sending message: $e');
 	  } finally {
@@ -411,11 +472,14 @@ class _ChatViewState extends State<ChatView> {
 class ChatBubble extends StatelessWidget {
   final String message;
   final bool isSentByMe;
+  final String createdAt;
 
-  const ChatBubble({required this.message, required this.isSentByMe});
-
+  const ChatBubble({required this.message, required this.isSentByMe, required this.createdAt});
+  
   @override
   Widget build(BuildContext context) {
+	final createdDate = DateTime.parse(createdAt);
+	final timeAgo = timeago.format(createdDate);
     return Align(
       alignment: isSentByMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
@@ -425,10 +489,24 @@ class ChatBubble extends StatelessWidget {
           color: isSentByMe ? Colors.blue : Colors.grey.shade200,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Text(
-          message,
-          style: TextStyle(color: isSentByMe ? Colors.white : Colors.black),
-        ),
+		child: Column(
+			crossAxisAlignment:
+				isSentByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+			children: [
+			  Text(
+				message,
+				style: TextStyle(color: isSentByMe ? Colors.white : Colors.black),
+			  ),
+			  SizedBox(height: 4),
+			  Text(
+				timeAgo,
+				style: TextStyle(
+				  fontSize: 10,
+				  color: isSentByMe ? Colors.white70 : Colors.black54,
+				),
+			  ),
+			],
+		),
       ),
     );
   }
