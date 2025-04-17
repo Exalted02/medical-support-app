@@ -11,11 +11,12 @@ class ApiEndpoints {
 	static const String storeClient = 'store-client';
 	static const String storeEmployee = 'store-employee';
 	static const String register_verifyOtp = 'register-verify-otp';
-	static const String reasonList = 'chat-reasons';
 	static const String chatList = 'chats-list';
 	static const String chatMessageData = 'chat-message-data';
 	static const String updateMessage = 'update-message';
 	static const String deleteMessage = 'delete-message';
+	static const String addNewReason = 'add-new-reason';
+	static const String reasonList = 'chat-reasons';
 	static const String sendReasonMessage = 'send-reason-message';
 	static const String homeCategoryList = 'home-category-list';
 	static const String homeArtistList = 'home-artist-list';

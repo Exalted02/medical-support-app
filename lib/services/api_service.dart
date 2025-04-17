@@ -131,6 +131,11 @@ class ApiService extends BaseApiService {
 	Future<Map<String, dynamic>> chatList() {
 		return get(ApiEndpoints.chatList, requiresAuth: true);
 	}
+	// For adding new reason
+	Future<Map<String, dynamic>> addNewReason(String reasonText) async {
+		final response = await post(ApiEndpoints.addNewReason, {'reason': reasonText}, requiresAuth: true);
+		return response;
+	}
 	//Home page category list
 	Future<Map<String, dynamic>> chatMessageData(chatGroupId) async {
 		final response = await post(ApiEndpoints.chatMessageData, {'chat_group_id': chatGroupId}, requiresAuth: true);

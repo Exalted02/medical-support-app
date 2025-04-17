@@ -21,6 +21,21 @@ class ChatController extends GetxController {
 		
 	}
 	
+	// For adding new reason
+	Future<Map<String, dynamic>> addNewReason(String reasonText) async {
+	  try {
+		final response = await apiService.addNewReason(reasonText);
+		return response;
+	  } catch (e) {
+	    SnackbarHelper.showErrorSnackbar(
+		  title: Appcontent.snackbarTitleError,
+		  message: 'Something went wrong',
+		  position: SnackPosition.BOTTOM, // Custom position
+		);
+		return {};
+	  }
+	}
+
 	// Home page category data
 	Future<void> reasonListData() async {
 		try {
